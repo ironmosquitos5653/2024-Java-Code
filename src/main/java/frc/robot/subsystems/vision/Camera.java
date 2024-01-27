@@ -50,7 +50,7 @@ public class Camera {
 
     public PhotonCamera getCam() {
       if (cam == null) {
-        cam = new PhotonCamera("testCamera");
+        cam = new PhotonCamera(name);
       }
       return cam;
     }
