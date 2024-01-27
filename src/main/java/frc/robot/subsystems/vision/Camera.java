@@ -26,12 +26,12 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class Camera {
 
-    public final static Camera DRIVE_CAMERA =  new Camera("Drive", new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0,0,0))); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.
+    public final static Camera DRIVE_CAMERA =  new Camera("drive", new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0,0,0))); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.
     //private final static Camera SHOOT_CAMERA =  new Camera("Drive", new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0,0,0))); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.
 
     private final String name;
     private final Transform3d robotToCam;
-    private PhotonCamera cam;
+    public PhotonCamera cam;
     private PhotonPoseEstimator photonPoseEstimator;
     private Pose2d previousPose = new Pose2d();
 
@@ -41,16 +41,18 @@ public class Camera {
       this.robotToCam = robotToCam;
 
       ShuffleboardTab tab = Shuffleboard.getTab("Vision");
-      tab.addBoolean("hasCamera", this::hasCamera);
+      tab.addString("hasCamera", this::hasCamera);
     }
+    int i = 0;
 
-    public boolean hasCamera() {
-        return getCam() != null;
+    public String hasCamera() {
+        return cam.getName() + (getCam() != null) + " - " + cam.isConnected() + " - " + i++;
     }
 
     public PhotonCamera getCam() {
       if (cam == null) {
-        cam = new PhotonCamera("testCamera");
+        cam = new PhotonCamera(name);
+        cam.setPipelineIndex(0);
       }
       return cam;
     }

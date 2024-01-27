@@ -12,6 +12,7 @@ import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
@@ -51,23 +52,27 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   private final Field2d field2d = new Field2d();
 
+  ShuffleboardTab tab = Shuffleboard.getTab("Vision");
+
   public PoseEstimatorSubsystem(DriveSubsystem driveSubsystem) {
     this.driveSubsystem = driveSubsystem;
 
-
-    ShuffleboardTab tab = Shuffleboard.getTab("Vision");
     
     poseEstimator =  new SwerveDrivePoseEstimator(
         DriveConstants.kDriveKinematics,
         driveSubsystem.getGyroscopeRotation(),
         driveSubsystem.getModulePositions(),
-        new Pose2d(),
+        new Pose2d(0, 2, new Rotation2d()),
         stateStdDevs,
         visionMeasurementStdDevs);
     
     tab.addString("Pose", this::getFomattedPose).withPosition(0, 0).withSize(2, 0);
     tab.add("Field", field2d).withPosition(2, 0).withSize(6, 4);
+    tab.addBoolean("isPresent", this::hasAprilTag);
   }
+    public boolean hasAprilTag() {
+      return Camera.DRIVE_CAMERA.cam.getLatestResult().hasTargets();
+    }
 
   @Override
   public void periodic() {
