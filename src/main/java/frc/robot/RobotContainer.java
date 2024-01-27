@@ -17,7 +17,6 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
@@ -27,12 +26,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.pathplanner.lib.auto.AutoBuilder;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -48,8 +42,7 @@ public class RobotContainer {
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
-  private SendableChooser<String> sendableChooser;
-  private Map<String, Command> autoCommands = new HashMap<String, Command>();
+  private SendableChooser<String> sendableChooser = new SendableChooser<>();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -70,8 +63,6 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
                 true, true),
             m_robotDrive));
-
-    buildAutos();
   }
 
   /**
@@ -95,7 +86,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommandX() {
+  public Command getAutonomousCommand() {
     // Create config for trajectory
     TrajectoryConfig config = new TrajectoryConfig(
         AutoConstants.kMaxSpeedMetersPerSecond,
@@ -134,23 +125,5 @@ public class RobotContainer {
 
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
-  }
-
-  public Command getAutonomousCommand() {
-    return autoCommands.get(sendableChooser.getSelected());
-  }
-
-  public void buildAutos() {
-    sendableChooser= new SendableChooser<String>();
-
-    addAuto("S Curve", AutoBuilder.buildAuto("Example Auto"));
-
-    SmartDashboard.putData("Autonomous Chooser", sendableChooser);
-  }
-
-  public void addAuto(String name, Command command) {
-    autoCommands.put(name, command);
-    sendableChooser.addOption(name, name);
-
   }
 }
