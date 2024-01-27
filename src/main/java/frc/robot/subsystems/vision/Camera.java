@@ -6,7 +6,10 @@ import java.util.Optional;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
+import org.photonvision.PhotonUtils;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.photonvision.targeting.PhotonPipelineResult;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
@@ -15,33 +18,89 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class Camera {
 
     public final static Camera DRIVE_CAMERA =  new Camera("Drive", new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0,0,0))); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.
     //private final static Camera SHOOT_CAMERA =  new Camera("Drive", new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0,0,0))); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.
 
-    private final PhotonPoseEstimator photonPoseEstimator;
-    private Pose2d previousPose = null;
+    private final String name;
+    private final Transform3d robotToCam;
+    private PhotonCamera cam;
+    private PhotonPoseEstimator photonPoseEstimator;
+    private Pose2d previousPose = new Pose2d();
 
     public Camera(String name, Transform3d robotToCam) {
               //Forward Camera
-      PhotonCamera cam = new PhotonCamera("testCamera");
+      this.name = name;
+      this.robotToCam = robotToCam;
 
-      // Construct PhotonPoseEstimator
-      photonPoseEstimator = new PhotonPoseEstimator(getFieldLayout(), PoseStrategy.CLOSEST_TO_REFERENCE_POSE, cam, robotToCam);
+      ShuffleboardTab tab = Shuffleboard.getTab("Vision");
+      tab.addBoolean("hasCamera", this::hasCamera);
+    }
+
+    public boolean hasCamera() {
+        return getCam() != null;
+    }
+
+    public PhotonCamera getCam() {
+      if (cam == null) {
+        cam = new PhotonCamera("testCamera");
+      }
+      return cam;
+    }
+
+    public PhotonPoseEstimator getPhotonPoseEstimator() {
+      if (photonPoseEstimator == null && getCam() != null) {
+        // Construct PhotonPoseEstimator
+        photonPoseEstimator = new PhotonPoseEstimator(getFieldLayout(), PoseStrategy.CLOSEST_TO_REFERENCE_POSE, getCam(), robotToCam);
+      }
+      return photonPoseEstimator;
+    }
+
+
+    public PhotonTrackedTarget getBestTarget() {
+        if (getCam() != null) {
+            PhotonPipelineResult result = getCam().getLatestResult();
+            if (result.hasTargets())
+                return result.getBestTarget();
+        }
+        return null;
     }
 
     public Optional<EstimatedRobotPose> getEstimatedGlobalPose() {
-        photonPoseEstimator.setReferencePose(previousPose);
-        Optional<EstimatedRobotPose> pose = photonPoseEstimator.update();
-        if (pose.isPresent()) {
-            previousPose = pose.get().estimatedPose.toPose2d();
+        if (getPhotonPoseEstimator() != null) {
+            photonPoseEstimator.setReferencePose(previousPose);
+            Optional<EstimatedRobotPose> pose = photonPoseEstimator.update();
+            if (pose.isPresent()) {
+                previousPose = pose.get().estimatedPose.toPose2d();
+            }
+            return pose;
         }
-        return pose;
+        return null;
     }
+    
+    /* 
+    public double distanceToTarget() {
+        PhotonPipelineResult result = cam.getLatestResult();
+        if (result.hasTargets()) {
+            PhotonTrackedTarget target = result.getBestTarget();
+            double range =
+            PhotonUtils.calculateDistanceToTargetMeters(
+                38, //CAMERA_HEIGHT_METERS,
+                getFieldLayout().getTagPose(target.getFiducialId()).get().getZ()
+                CAMERA_PITCH_RADIANS,
+                Units.degreesToRadians(().getPitch()));
+        }
+
+        return -1;
+    }
+    */
 
     private static AprilTagFieldLayout layout;
 
