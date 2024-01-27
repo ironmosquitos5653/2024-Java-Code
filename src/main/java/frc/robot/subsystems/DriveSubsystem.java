@@ -7,6 +7,9 @@ package frc.robot.subsystems;
 import java.util.Arrays;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -17,9 +20,10 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
-import edu.wpi.first.wpilibj.ADIS16470_IMU;
-import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.ModuleConstants;
 import frc.utils.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -72,6 +76,17 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
+        AutoBuilder.configureHolonomic(
+        this::getPose,
+        this::setAutoStart,
+        () -> DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates()),
+        this::runVelocity,
+        new HolonomicPathFollowerConfig(
+            DriveConstants.kMaxSpeedMetersPerSecond, ModuleConstants.kWheelDiameterMeters/2, new ReplanningConfig()),
+        () ->
+            DriverStation.getAlliance().isPresent()
+                && DriverStation.getAlliance().get() == Alliance.Red,
+        this);
   }
 
   @Override
@@ -258,5 +273,36 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public SwerveModulePosition[] getModulePositions() {
     return Arrays.stream(swerveModules).map(module -> module.getPosition()).toArray(SwerveModulePosition[]::new);
+  }
+
+  /**
+   * Runs the drive at the desired velocity.
+   *
+   * @param speeds Speeds in meters/sec
+   */
+  public void runVelocity(ChassisSpeeds speeds) {
+    // Calculate module setpoints
+    ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
+    SwerveModuleState[] setpointStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(discreteSpeeds);
+    SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, DriveConstants.kMaxSpeedMetersPerSecond);
+
+    // Send setpoints to modules
+    SwerveModuleState[] optimizedSetpointStates = new SwerveModuleState[4];
+    for (int i = 0; i < 4; i++) {
+      // The module returns the optimized state, useful for logging
+       swerveModules[i].setDesiredState(setpointStates[i]);
+    }
+  }
+
+  private SwerveModuleState[] getModuleStates() {
+    SwerveModuleState[] states = new SwerveModuleState[4];
+    for (int i = 0; i < 4; i++) {
+      states[i] = swerveModules[i].getState();
+    }
+    return states;
+  }
+
+  public void setAutoStart(Pose2d pose) {
+    // ignoring, I think.
   }
 }

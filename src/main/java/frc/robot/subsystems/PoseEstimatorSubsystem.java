@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.VisionConstants.CAMERA_TO_ROBOT;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -22,9 +21,9 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.photonvision.EstimatedRobotPose;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.subsystems.vision.AprilTagVisionIOLimelight;
-import frc.robot.subsystems.vision.PoseEstimate;;
+import frc.robot.subsystems.vision.Camera;
 
 public class PoseEstimatorSubsystem extends SubsystemBase {
 
@@ -48,8 +47,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
    */
   private static final Vector<N3> visionMeasurementStdDevs = VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(10));
 
-  private final AprilTagVisionIOLimelight aprilTagVisionIOLimelight;
-
   private final SwerveDrivePoseEstimator poseEstimator;
 
   private final Field2d field2d = new Field2d();
@@ -57,18 +54,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   public PoseEstimatorSubsystem(DriveSubsystem driveSubsystem) {
     this.driveSubsystem = driveSubsystem;
 
-    aprilTagVisionIOLimelight = new AprilTagVisionIOLimelight("shootCamera", "driveCamera");
-
-    AprilTagFieldLayout layout;
-    try {
-      layout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
-      var alliance = DriverStation.getAlliance().get();
-      layout.setOrigin(alliance == Alliance.Blue ?
-          OriginPosition.kBlueAllianceWallRightSide : OriginPosition.kRedAllianceWallRightSide);
-    } catch(IOException e) {
-      DriverStation.reportError("Failed to load AprilTagFieldLayout", e.getStackTrace());
-      layout = null;
-    }
 
     ShuffleboardTab tab = Shuffleboard.getTab("Vision");
     
@@ -87,9 +72,17 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
 
-    for (PoseEstimate pose:aprilTagVisionIOLimelight.getVisionData()) {
-        poseEstimator.addVisionMeasurement(pose.pose().toPose2d(), pose.timestampSeconds());
+    Optional<EstimatedRobotPose> p = Camera.DRIVE_CAMERA.getEstimatedGlobalPose();
+    if (p.isPresent()) {
+        poseEstimator.addVisionMeasurement(p.get().estimatedPose.toPose2d(), p.get().timestampSeconds);
     }
+    /*
+    p = Camera.SHOOT_CAMERA.getEstimatedGlobalPose();
+    if (p.isPresent()) {
+        poseEstimator.addVisionMeasurement(p.get().estimatedPose.toPose2d(), p.get().timestampSeconds);
+    }
+    */
+
     // Update pose estimator with driveSubsystem sensors
     poseEstimator.update(
       driveSubsystem.getGyroscopeRotation(),
