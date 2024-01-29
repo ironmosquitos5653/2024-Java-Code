@@ -24,12 +24,12 @@ public final class Main {
    * <p>If you change your main robot class, change the parameter type.
    */
   public static void main(String... args) {
-    //RobotBase.startRobot(Robot::new);
+    RobotBase.startRobot(Robot::new);
 
-        Transform3d trans = new Transform3d(new Translation3d(-0.3425, 0.0, -0.233), new Rotation3d(0,0,180));
-        Pose3d thePose = new Pose3d(0,0,0, new Rotation3d(0,0,180));
+        //Transform3d trans = new Transform3d(new Translation3d(-0.3425, 0.0, -0.233), new Rotation3d(0,0,180));
+        //Pose3d thePose = new Pose3d(0,0,0, new Rotation3d(0,0,180));
 
-        Pose3d x = thePose.transformBy(trans);
-        System.out.println(x);
+        //Pose3d x = thePose.transformBy(trans);
+        //System.out.println(x);
   }
 }
