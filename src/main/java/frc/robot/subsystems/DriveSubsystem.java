@@ -50,6 +50,7 @@ public class DriveSubsystem extends SubsystemBase {
       DriveConstants.kBackRightChassisAngularOffset);
 
   private final MAXSwerveModule[] swerveModules = new MAXSwerveModule[] {m_frontLeft, m_frontRight, m_rearLeft, m_rearRight};
+  private PoseEstimatorSubsystem poseEstimatorSubsystem = null;
 
   // The gyro sensor
   private final Pigeon2 m_gyro = new Pigeon2(2);
@@ -76,6 +77,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
+  }
+  public void setPoseEstimator(PoseEstimatorSubsystem p) {
+    poseEstimatorSubsystem = p;
         AutoBuilder.configureHolonomic(
         this::getPose,
         this::setAutoStart,
@@ -108,7 +112,10 @@ public class DriveSubsystem extends SubsystemBase {
    * @return The pose.
    */
   public Pose2d getPose() {
-    return m_odometry.getPoseMeters();
+    if(poseEstimatorSubsystem != null) {
+      return m_odometry.getPoseMeters();
+    }
+    return new Pose2d();
   }
 
   /**

@@ -55,6 +55,7 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    m_robotDrive.setPoseEstimator(m_PoseEstimatorSubsystem);
     // Configure the button bindings
     configureButtonBindings();
 
@@ -143,7 +144,7 @@ public class RobotContainer {
   public void buildAutos() {
     sendableChooser= new SendableChooser<String>();
 
-    addAuto("S Curve", AutoBuilder.buildAuto("Example Auto"));
+    addAuto("DriveBack", AutoBuilder.buildAuto("DriveBack"));
 
     SmartDashboard.putData("Autonomous Chooser", sendableChooser);
   }
