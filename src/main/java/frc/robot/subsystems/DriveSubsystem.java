@@ -310,6 +310,6 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void setAutoStart(Pose2d pose) {
-    // ignoring, I think.
+    poseEstimatorSubsystem.resetPosition(m_gyro.getRotation2d(), pose);
   }
 }

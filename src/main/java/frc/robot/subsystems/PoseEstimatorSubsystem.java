@@ -14,6 +14,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.vision.Camera;
@@ -60,6 +61,11 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     
     tab.addString("Pose", this::getFomattedPose).withPosition(0, 0).withSize(2, 0);
     tab.add("Field", field2d).withPosition(2, 0).withSize(6, 4);
+
+  }
+
+  void resetPosition(Rotation2d rotation, Pose2d pose ) {
+    poseEstimator.resetPosition(rotation, driveSubsystem.getModulePositions(), pose);
   }
 
   @Override
