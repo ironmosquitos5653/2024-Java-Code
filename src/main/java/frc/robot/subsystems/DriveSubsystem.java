@@ -113,7 +113,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public Pose2d getPose() {
     if(poseEstimatorSubsystem != null) {
-      return m_odometry.getPoseMeters();
+      return poseEstimatorSubsystem.getCurrentPose();
     }
     return new Pose2d();
   }

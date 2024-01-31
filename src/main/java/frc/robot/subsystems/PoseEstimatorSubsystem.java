@@ -7,6 +7,8 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -52,7 +54,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
         DriveConstants.kDriveKinematics,
         driveSubsystem.getGyroscopeRotation(),
         driveSubsystem.getModulePositions(),
-        new Pose2d(),
+        new Pose2d(new Translation2d(0, 2), new Rotation2d(180)),
         stateStdDevs,
         visionMeasurementStdDevs);
     
