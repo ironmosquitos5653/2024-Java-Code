@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7505092241052124,
+      "y": 6.8891204948829134
+    },
+    "rotation": 59.036243467926454
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FromSpeaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ToSpeaker"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

@@ -21,11 +21,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.AimAmpCommand;
+import frc.robot.commands.AimLifterCommand;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.ShootCommand;
+import frc.robot.commands.TestCommand;
+import frc.robot.subsystems.AmpSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LifterSubsystem;
 import frc.robot.subsystems.PoseEstimatorSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import java.util.HashMap;
@@ -44,9 +54,16 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final PoseEstimatorSubsystem m_PoseEstimatorSubsystem = new PoseEstimatorSubsystem(m_robotDrive);
+  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  private final ShooterSubsystem m_ShooterSubsystem = new ShooterSubsystem();
+  private final LifterSubsystem m_LifterSubsystem = new LifterSubsystem();
+  private final AmpSubsystem m_AmpSubsystem = new AmpSubsystem();
+
+
 
   // The driver's controller
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+ // XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  CommandXboxController m_driverController = new CommandXboxController(0);
 
   private SendableChooser<String> sendableChooser;
   private Map<String, Command> autoCommands = new HashMap<String, Command>();
@@ -61,6 +78,8 @@ public class RobotContainer {
 
     m_PoseEstimatorSubsystem.setDefaultCommand(new RunCommand( () -> {}, m_PoseEstimatorSubsystem));
     // Configure default commands
+    m_LifterSubsystem.setDefaultCommand(new AimLifterCommand(m_LifterSubsystem));
+
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.
@@ -85,12 +104,19 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kR1.value)
-        .whileTrue(new RunCommand(
-            () -> m_robotDrive.setX(),
-            m_robotDrive));
+    // new JoystickButton(m_driverController, Button.kR1.value)
+    //     .whileTrue(new RunCommand(
+    //         () -> m_robotDrive.setX(),
+    //         m_robotDrive));
+
+    m_driverController.a().whileTrue(new IntakeCommand(m_IntakeSubsystem));
+    m_driverController.b().onTrue(new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, 1));
+    m_driverController.x().whileTrue(new TestCommand(m_LifterSubsystem));
+    m_driverController.y().whileTrue(new AimAmpCommand(m_AmpSubsystem));
   }
 
+    
+  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -145,6 +171,8 @@ public class RobotContainer {
     sendableChooser= new SendableChooser<String>();
 
     addAuto("DriveBack", AutoBuilder.buildAuto("DriveBack"));
+    addAuto("BankAndForth", AutoBuilder.buildAuto("Back and forth"));
+    addAuto("test", AutoBuilder.buildAuto("test"));
 
     SmartDashboard.putData("Autonomous Chooser", sendableChooser);
   }

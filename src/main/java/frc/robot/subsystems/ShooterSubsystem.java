@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -30,14 +31,17 @@ public class ShooterSubsystem extends SubsystemBase {
     shoot1.restoreFactoryDefaults();
     shoot2 = new CANSparkFlex(deviceIDshoot2, MotorType.kBrushless);
     shoot2.restoreFactoryDefaults();
-    shootAngle = new CANSparkMax(deviceIDshootAngle, MotorType.kBrushless);
-    shootAngle.restoreFactoryDefaults();
+    //shootAngle = new CANSparkMax(deviceIDshootAngle, MotorType.kBrushless);
+    //shootAngle.restoreFactoryDefaults();
   }
 
    /** Creates a new ShooterSubsystem. */
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  
+    SmartDashboard.putNumber("Shoo1 Velocity",  shoot1.getEncoder().getVelocity());
+    SmartDashboard.putNumber("Shoo2 Velocity",  shoot2.getEncoder().getVelocity());
   }
 
   public void shoot(double speed) {
