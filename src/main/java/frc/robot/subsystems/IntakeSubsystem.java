@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -19,6 +21,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private static final int deviceIDdecider = 12;
   private CANSparkMax decider;
+  DigitalInput limit = new DigitalInput(4);
 
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
@@ -32,7 +35,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("switch", limit.get());
   }
 
   public void intakeOn(double speed) {
@@ -46,9 +49,23 @@ public class IntakeSubsystem extends SubsystemBase {
     decider.set(speed);
   }
 
+ public void advanceOff(double speed) {
+    intakeAdvance.set(0);
+    decider.set(0);
+  }
+
+ public void ampAdvance(double speed) {
+    intakeAdvance.set(speed);
+    decider.set(-speed);
+  }
+  
   public void intakeOff() {
     intake.set(0);
     intakeAdvance.set(0);
     decider.set(0);
+  }
+
+  public boolean isLoaded() {
+    return ! limit.get();
   }
 }

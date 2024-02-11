@@ -9,12 +9,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AmpSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IntakeNote extends Command {
+public class IntakeNoteCommand extends Command {
   /** Creates a new SuckNote. */
 private AmpSubsystem m_AmpSubsystem;
 private IntakeSubsystem m_IntakeSubsystem;
 private Timer timer;
-  public IntakeNote(AmpSubsystem ampSubsystem, IntakeSubsystem intakeSubsystem) {
+  public IntakeNoteCommand(AmpSubsystem ampSubsystem, IntakeSubsystem intakeSubsystem) {
     m_AmpSubsystem = ampSubsystem;
     m_IntakeSubsystem = intakeSubsystem;
     addRequirements(ampSubsystem);
@@ -46,6 +46,6 @@ private Timer timer;
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.hasElapsed(2);
+    return ! m_IntakeSubsystem.isLoaded();
   }
 }

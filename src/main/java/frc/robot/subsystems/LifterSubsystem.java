@@ -26,9 +26,7 @@ public class LifterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("pitch", m_gyro.getPitch().getValue());
-    SmartDashboard.putNumber("roll", m_gyro.getRoll().getValue());
-    SmartDashboard.putNumber("yaw", m_gyro.getYaw().getValue());
+    SmartDashboard.putNumber("pitch", m_gyro.getPitch().getValue() - angleOffset);
   }
 
   public void up(double speed) {

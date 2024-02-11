@@ -147,6 +147,12 @@ public final class Constants {
     public static final Transform3d CAMERA_TO_ROBOT =
         new Transform3d(new Translation3d(-0.3425, 0.0, -0.233), new Rotation3d());
     public static final Transform3d ROBOT_TO_CAMERA = CAMERA_TO_ROBOT.inverse();
+
+    public static final double ROBOT_CENTER_HEIGHT = .4572;
+    public static final Translation3d BLUE_SPEAKER_TARGET = new Translation3d(.1632, 5.55, 2.1082);
+    public static final Translation3d RED_SPEAKER_TARGET = new Translation3d(16.3768, 5.55, 2.1082);
+    // Red speaker ID 4 
+    // Blue speaker ID 7
   }
 
 

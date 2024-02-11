@@ -21,19 +21,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.AimAmpCommand;
 import frc.robot.commands.AimLifterCommand;
+import frc.robot.commands.AmpShootCommand;
+import frc.robot.commands.AmpUpCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.IntakeNoteCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.TestCommand;
 import frc.robot.subsystems.AmpSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LifterSubsystem;
+import frc.robot.subsystems.MoveAmpSubsystem;
 import frc.robot.subsystems.PoseEstimatorSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -58,6 +63,7 @@ public class RobotContainer {
   private final ShooterSubsystem m_ShooterSubsystem = new ShooterSubsystem();
   private final LifterSubsystem m_LifterSubsystem = new LifterSubsystem();
   private final AmpSubsystem m_AmpSubsystem = new AmpSubsystem();
+  private final MoveAmpSubsystem m_MoveAmpSubsystem = new MoveAmpSubsystem();
 
 
 
@@ -78,7 +84,7 @@ public class RobotContainer {
 
     m_PoseEstimatorSubsystem.setDefaultCommand(new RunCommand( () -> {}, m_PoseEstimatorSubsystem));
     // Configure default commands
-    m_LifterSubsystem.setDefaultCommand(new AimLifterCommand(m_LifterSubsystem));
+    m_LifterSubsystem.setDefaultCommand(new AimLifterCommand(m_LifterSubsystem, m_PoseEstimatorSubsystem));
 
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
@@ -109,10 +115,14 @@ public class RobotContainer {
     //         () -> m_robotDrive.setX(),
     //         m_robotDrive));
 
-    m_driverController.a().whileTrue(new IntakeCommand(m_IntakeSubsystem));
+    m_driverController.a().onTrue(new IntakeCommand(m_IntakeSubsystem));
     m_driverController.b().onTrue(new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, 1));
-    m_driverController.x().whileTrue(new TestCommand(m_LifterSubsystem));
-    m_driverController.y().whileTrue(new AimAmpCommand(m_AmpSubsystem));
+    m_driverController.rightBumper().whileTrue(new TestCommand(m_LifterSubsystem));
+    // m_driverController.x().whileTrue(new AmpDownCommand(m_AmpSubsystem));
+    m_driverController.povUp().onTrue(new IntakeNoteCommand(m_AmpSubsystem, m_IntakeSubsystem));
+    m_driverController.povRight().onTrue(new AmpUpCommand(m_IntakeSubsystem, m_MoveAmpSubsystem));
+    m_driverController.povDown().onTrue(new AmpShootCommand(m_AmpSubsystem, m_MoveAmpSubsystem));
+
   }
 
     

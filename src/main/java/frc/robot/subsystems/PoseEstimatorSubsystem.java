@@ -7,6 +7,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N3;
@@ -48,6 +49,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   public PoseEstimatorSubsystem(DriveSubsystem driveSubsystem) {
     this.driveSubsystem = driveSubsystem;
 
+    SmartDashboard.putNumber("Shoot Angle", 16);
 
     ShuffleboardTab tab = Shuffleboard.getTab("Vision");
     
@@ -62,6 +64,10 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     tab.addString("Pose", this::getFomattedPose).withPosition(0, 0).withSize(2, 0);
     tab.add("Field", field2d).withPosition(2, 0).withSize(6, 4);
 
+    SmartDashboard.putString("4", getFomattedPose(Camera.getFieldLayout().getTagPose(4).get().toPose2d()));
+    
+    SmartDashboard.putString("7", getFomattedPose(Camera.getFieldLayout().getTagPose(7).get().toPose2d()));
+
   }
 
   void resetPosition(Rotation2d rotation, Pose2d pose ) {
@@ -71,7 +77,9 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
 
-    for( frc.robot.subsystems.vision.Camera.PoseInstance p: Camera.DRIVE_CAMERA.getLatest()) {
+    
+    //ArrayList< poses = Camera.DRIVE_CAMERA.getLatest();
+    for(frc.robot.subsystems.vision.Camera.PoseInstance p: Camera.DRIVE_CAMERA.getLatest()) {
         poseEstimator.addVisionMeasurement(p.getPose(), p.getTimestamp());
     }
     /*
@@ -89,7 +97,11 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   }
 
   private String getFomattedPose() {
-    var pose = getCurrentPose();
+    return getFomattedPose(getCurrentPose());
+  }
+
+  private String getFomattedPose(Pose2d pose) {
+
     return String.format("(%.2f, %.2f) %.2f degrees", 
         pose.getX(), 
         pose.getY(),
@@ -119,6 +131,13 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
    */
   public void resetFieldPosition() {
     setCurrentPose(new Pose2d());
+  }
+
+  public double getShootAngle() {
+    double angle = SmartDashboard.getNumber("Shoot Angle", 15);
+    SmartDashboard.putNumber("The changed number", angle);
+
+    return angle;
   }
 
 }

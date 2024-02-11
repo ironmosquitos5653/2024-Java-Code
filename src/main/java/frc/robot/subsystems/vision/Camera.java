@@ -26,8 +26,10 @@ import frc.robot.subsystems.vision.LimelightHelpers.Results;
 public class Camera {
 
     public final static Camera DRIVE_CAMERA =  new Camera("limelight-drive", new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0,0,0))); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.
-    //private final static Camera SHOOT_CAMERA =  new Camera("Drive", new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0,0,0))); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.
-
+    private final static Camera SHOOT_CAMERA =  new Camera("limelight-shoot", new Transform3d(new Translation3d(0.23495, 0.3175, 0.0635), new Rotation3d(0,0,180))); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.
+// 9.25
+// 12.5
+// 2.5
     private final String name;
     private final Transform3d robotToCam;
     private Pose2d previousPose = new Pose2d();
@@ -72,7 +74,11 @@ public class Camera {
         try {
             layout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
             var alliance = DriverStation.getAlliance().get();
-            layout.setOrigin(alliance == Alliance.Blue ?  OriginPosition.kBlueAllianceWallRightSide : OriginPosition.kRedAllianceWallRightSide);
+            //layout.setOrigin(alliance == Alliance.Blue ?  OriginPosition.kBlueAllianceWallRightSide : OriginPosition.kRedAllianceWallRightSide);
+            layout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
+
+
+
         } catch(IOException e) {
             DriverStation.reportError("Failed to load AprilTagFieldLayout", e.getStackTrace());
             layout = null;

@@ -7,20 +7,21 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.LifterSubsystem;
+import frc.robot.subsystems.PoseEstimatorSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AimLifterCommand extends PIDCommand {
   /** Creates a new AimLifterCommand. */
-  public AimLifterCommand(LifterSubsystem lifterSubsystem) {
+  public AimLifterCommand(LifterSubsystem lifterSubsystem, PoseEstimatorSubsystem poseEstimatorSubsystem) {
     super(
         // The controller that the command will use
-        new PIDController(.01, 0, 0),
+        new PIDController(.01, .003, 0),
         // This should return the measurement
         () -> lifterSubsystem.getAngle(),
         // This should return the setpoint (can also be a constant)
-        () -> 30,
+        () -> poseEstimatorSubsystem.getShootAngle(),
         // This uses the output
         output -> {
           if(output > .2) {
@@ -35,6 +36,7 @@ public class AimLifterCommand extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+  
     return false;
   }
 }

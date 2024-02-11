@@ -7,13 +7,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AmpSubsystem;
+import frc.robot.subsystems.MoveAmpSubsystem;
 
-public class AmpShoot extends Command {
+public class AmpShootCommand extends Command {
   private AmpSubsystem m_AmpSubsystem;
+  private MoveAmpSubsystem m_MoveAmpSubsystem;
   private Timer timer;
 
-  public AmpShoot(AmpSubsystem ampSubsystem) {
+  public AmpShootCommand(AmpSubsystem ampSubsystem, MoveAmpSubsystem moveAmpSubsystem) {
     m_AmpSubsystem = ampSubsystem;
+    m_MoveAmpSubsystem = moveAmpSubsystem;
     addRequirements(ampSubsystem);
   }
 
@@ -29,18 +32,21 @@ public class AmpShoot extends Command {
   @Override
   public void execute() {
     m_AmpSubsystem.ampShoot(.6);
+    if (timer.hasElapsed(.25)) {
+      m_MoveAmpSubsystem.setTargetPosition(.35);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_AmpSubsystem.ampShoot(0);
-    m_AmpSubsystem.setTargetPosition(.99);
+    m_MoveAmpSubsystem.setTargetPosition(.56);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.hasElapsed(1);
+    return timer.hasElapsed(1.5);
   }
 }

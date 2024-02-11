@@ -5,34 +5,52 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.AmpSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.MoveAmpSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AmpUpCommand extends PIDCommand {
-  /** Creates a new AmpUpCommand. */
-  public AmpUpCommand(AmpSubsystem ampSubsystem) {
-    super(
-        // The controller that the command will use
-        new PIDController(1.2, .1, 0),
-        // This should return the measurement
-        () -> ampSubsystem.getPosition(),
-        // This should return the setpoint (can also be a constant)
-        () -> ampSubsystem.getTargetPosition(),
-        // This uses the output
-        output -> {
-            ampSubsystem.setAmpSpeed(-output);
-        });
-        addRequirements(ampSubsystem);
-    // Use addRequirements() here to declare subsystem dependencies.
-    // Configure additional PID options by calling `getController` here.
+public class AmpUpCommand extends Command {
+ 
+  IntakeSubsystem m_IntakeSubsystem;
+  MoveAmpSubsystem m_MoveAmpSubsystem;
+  Timer timer = new Timer();
+
+  public AmpUpCommand(IntakeSubsystem intakeSubsystem, MoveAmpSubsystem moveAmpSubsystem) {
+    m_IntakeSubsystem = intakeSubsystem;
+    m_MoveAmpSubsystem = moveAmpSubsystem;
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+    timer.reset();
+    timer.start();
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+    m_IntakeSubsystem.intakeOn(.5);
+    m_MoveAmpSubsystem.setTargetPosition(.21);
+
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    m_IntakeSubsystem.intakeOff();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return timer.hasElapsed(1);
   }
 }
