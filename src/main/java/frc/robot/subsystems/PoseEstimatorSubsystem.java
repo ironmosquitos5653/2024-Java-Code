@@ -133,10 +133,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     setCurrentPose(new Pose2d());
   }
 
-  public double getShootAngle() {
+  public double getVerticalShootAngle() {
     double angle = SmartDashboard.getNumber("Shoot Angle", 15);
-    SmartDashboard.putNumber("The changed number", angle);
-
     return angle;
   }
 

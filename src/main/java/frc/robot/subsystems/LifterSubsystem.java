@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -16,25 +17,40 @@ public class LifterSubsystem extends SubsystemBase {
   private CANSparkMax lifter; 
   private final Pigeon2 m_gyro = new Pigeon2(21);
   private double angleOffset;
+
+  private PIDController pidController;
+  private PoseEstimatorSubsystem m_PoseEstimatorSubsystem;
+
   /** Creates a new LifterSubsystem. */
-  public LifterSubsystem() {
+  public LifterSubsystem(PoseEstimatorSubsystem poseEstimatorSubsystem) {
+    m_PoseEstimatorSubsystem = poseEstimatorSubsystem;
     lifter = new CANSparkMax(deviceIDlifter, MotorType.kBrushless);
     lifter.restoreFactoryDefaults();
     m_gyro.reset();
     angleOffset = m_gyro.getPitch().getValue();
+
+    pidController = new PIDController(.01, .003, 0);
+
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("pitch", m_gyro.getPitch().getValue() - angleOffset);
+    double targetAngle = m_PoseEstimatorSubsystem.getVerticalShootAngle();
+    if (targetAngle > 0) {
+      pidController.setSetpoint(targetAngle);
+      SmartDashboard.putNumber("pitch", m_gyro.getPitch().getValue() - angleOffset);
+      double speed = pidController.calculate(getAngle());
+      if(speed > .2) {
+        speed = .2;
+      }
+      lifter.set(speed);
+    } else {
+      lifter.set(0);
+    }
   }
 
   public void up(double speed) {
     lifter.set(-speed);
-  }
-
-    public void stop(double speed) {
-    lifter.set(0);
   }
 
   public double getAngle() {
