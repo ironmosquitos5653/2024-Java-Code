@@ -40,6 +40,9 @@ public class MoveAmpSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Set Point", targetPostiton);
     double speed = pidController.calculate(getMeasurement());
     SmartDashboard.putNumber("Speed", speed);
+    if (speed > .2) {
+      speed = .2;
+    }
     amp.set(speed);
   }
   

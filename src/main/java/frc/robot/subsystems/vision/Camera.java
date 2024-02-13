@@ -16,6 +16,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.PubSubOption;
 import edu.wpi.first.networktables.StringSubscriber;
 import edu.wpi.first.networktables.TimestampedString;
+import edu.wpi.first.networktables.Topic;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -49,6 +50,17 @@ public class Camera {
         limelightTable
             .getStringTopic("json")
             .subscribe("", PubSubOption.keepDuplicates(true), PubSubOption.sendAll(true));
+
+    }
+
+    public String getTopics() {
+      NetworkTable limelightTable =  LimelightHelpers.getLimelightNTTable(name);
+        StringBuilder sb = new StringBuilder();
+        for(Topic topic : limelightTable.getTopics()) {
+            sb.append(topic.getName() + "   ");
+        }
+
+        return sb.toString();
     }
 
     /* 
