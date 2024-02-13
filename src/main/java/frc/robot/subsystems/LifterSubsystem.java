@@ -29,7 +29,7 @@ public class LifterSubsystem extends SubsystemBase {
     m_gyro.reset();
     angleOffset = m_gyro.getPitch().getValue();
 
-    pidController = new PIDController(.01, .003, 0);
+    pidController = new PIDController(.015, .0003, 0);
 
   }
 
@@ -38,13 +38,15 @@ public class LifterSubsystem extends SubsystemBase {
     double targetAngle = m_PoseEstimatorSubsystem.getVerticalShootAngle();
     if (targetAngle > 0) {
       pidController.setSetpoint(targetAngle);
+      SmartDashboard.putNumber("shooter setpoint", pidController.getSetpoint());
       SmartDashboard.putNumber("pitch", m_gyro.getPitch().getValue() - angleOffset);
-      SmartDashboard.putNumber("shooter Setpoint", pidController.getSetpoint());
+      SmartDashboard.putNumber("error", pidController.getPositionError());
       double speed = pidController.calculate(getAngle());
+      SmartDashboard.putNumber("speed", speed);
       if(speed > .2) {
         speed = .2;
       }
-      lifter.set(speed);
+      lifter.set(-speed);
     } else {
       lifter.set(0);
     }

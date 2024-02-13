@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.vision.Camera;
+import frc.robot.subsystems.vision.Camera.PoseInstance;
 
 public class PoseEstimatorSubsystem extends SubsystemBase {
 
@@ -76,17 +77,13 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-
-    
-    //ArrayList< poses = Camera.DRIVE_CAMERA.getLatest();
     for(frc.robot.subsystems.vision.Camera.PoseInstance p: Camera.DRIVE_CAMERA.getLatest()) {
         poseEstimator.addVisionMeasurement(p.getPose(), p.getTimestamp());
     }
-    /*
     for( PoseInstance p: Camera.SHOOT_CAMERA.getLatest()) {
+       SmartDashboard.putString("Shoot Camera Pose", getFomattedPose(p.getPose()));
         poseEstimator.addVisionMeasurement(p.getPose(), p.getTimestamp());
     }
-    */
 
     // Update pose estimator with driveSubsystem sensors
     poseEstimator.update(
