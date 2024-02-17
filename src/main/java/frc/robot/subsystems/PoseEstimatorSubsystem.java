@@ -10,13 +10,17 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.vision.Camera;
 import frc.robot.subsystems.vision.Camera.PoseInstance;
@@ -51,6 +55,10 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     this.driveSubsystem = driveSubsystem;
 
     SmartDashboard.putNumber("Shoot Angle", 30);
+
+
+    //-74 at rest
+    // @45  = -48
 
     ShuffleboardTab tab = Shuffleboard.getTab("Vision");
     
@@ -131,8 +139,57 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   }
 
   public double getVerticalShootAngle() {
+<<<<<<< Updated upstream
     double angle = SmartDashboard.getNumber("Shoot Angle", 30);
     return angle;
+=======
+    Translation3d target = getShootTarget();
+    double distance = getSpeakerDistance();
+
+    return Math.atan(Constants.VisionConstants.TARGET_HEIGHT_DIFF/distance);
+>>>>>>> Stashed changes
   }
+
+  public double getSpeakerDistance() {
+    Pose2d pose  = getCurrentPose();
+    Translation3d target = getShootTarget();
+     double xdiff = Math.abs(pose.getX() - target.getX());
+     double ydiff = Math.abs(pose.getY() - target.getY());
+
+    return Math.sqrt(ydiff*ydiff + xdiff*xdiff );
+  }
+
+  public double getHorizontalShootAngle() {
+    Pose2d pose  = getCurrentPose();
+    Translation3d target = getShootTarget();
+    double xdiff = Math.abs(pose.getX() - target.getX());
+    double ydiff = Math.abs(pose.getY() - target.getY());
+
+    double angle = Math.atan( ydiff / xdiff );
+
+    if (blueAlliance()) {
+      if (pose.getY() > target.getY()) {
+        return 270 - angle;
+      } else {
+        return 90 + angle;
+      }
+    }
+    // Red alliance
+    if (pose.getY() > target.getY()) {
+      return 270 + angle;
+    }
+    return 90 - angle;
+}
+
+private Translation3d getShootTarget() {
+  if ( blueAlliance()) {
+    return Constants.VisionConstants.BLUE_SPEAKER_TARGET;
+  }
+  return Constants.VisionConstants.RED_SPEAKER_TARGET;
+}
+
+public boolean blueAlliance() {
+    return DriverStation.getAlliance().get() == Alliance.Blue;
+}
 
 }
