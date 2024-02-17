@@ -50,7 +50,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   public PoseEstimatorSubsystem(DriveSubsystem driveSubsystem) {
     this.driveSubsystem = driveSubsystem;
 
-    SmartDashboard.putNumber("Shoot Angle", 16);
+    SmartDashboard.putNumber("Shoot Angle", 30);
 
     ShuffleboardTab tab = Shuffleboard.getTab("Vision");
     
@@ -84,7 +84,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
        SmartDashboard.putString("Shoot Camera Pose", getFomattedPose(p.getPose()));
         poseEstimator.addVisionMeasurement(p.getPose(), p.getTimestamp());
     }
-
+    SmartDashboard.putString("topics", Camera.SHOOT_CAMERA.getTopics());
     // Update pose estimator with driveSubsystem sensors
     poseEstimator.update(
       driveSubsystem.getGyroscopeRotation(),
@@ -131,7 +131,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   }
 
   public double getVerticalShootAngle() {
-    double angle = SmartDashboard.getNumber("Shoot Angle", 15);
+    double angle = SmartDashboard.getNumber("Shoot Angle", 30);
     return angle;
   }
 

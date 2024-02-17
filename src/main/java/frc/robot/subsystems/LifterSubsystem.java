@@ -39,7 +39,8 @@ public class LifterSubsystem extends SubsystemBase {
     if (targetAngle > 0) {
       pidController.setSetpoint(targetAngle);
       SmartDashboard.putNumber("shooter setpoint", pidController.getSetpoint());
-      SmartDashboard.putNumber("pitch", m_gyro.getPitch().getValue() - angleOffset);
+      SmartDashboard.putNumber("pitch", m_gyro.getPitch().getValue());
+      SmartDashboard.putNumber("shootangle", getAngle());
       SmartDashboard.putNumber("error", pidController.getPositionError());
       double speed = pidController.calculate(getAngle());
       SmartDashboard.putNumber("speed", speed);
@@ -57,6 +58,6 @@ public class LifterSubsystem extends SubsystemBase {
   }
 
   public double getAngle() {
-    return m_gyro.getPitch().getValue() - angleOffset;
+    return m_gyro.getPitch().getValue() + 90;
   }
 }
