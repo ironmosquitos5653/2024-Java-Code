@@ -23,6 +23,7 @@ import frc.robot.commands.AmpShootCommand;
 import frc.robot.commands.AmpUpCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeNoteCommand;
+import frc.robot.commands.IntakeSpitCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.AmpSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -32,6 +33,7 @@ import frc.robot.subsystems.MoveAmpSubsystem;
 import frc.robot.subsystems.PoseEstimatorSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -58,6 +60,7 @@ public class RobotContainer {
   private final LifterSubsystem m_LifterSubsystem = new LifterSubsystem(m_PoseEstimatorSubsystem);
   private final AmpSubsystem m_AmpSubsystem = new AmpSubsystem();
   private final MoveAmpSubsystem m_MoveAmpSubsystem = new MoveAmpSubsystem();
+  private final AutonomousManager m_AutonomousManager = new AutonomousManager(m_IntakeSubsystem, m_LifterSubsystem, m_ShooterSubsystem);
 
 
 
@@ -89,6 +92,8 @@ public class RobotContainer {
                 true, true),
             m_robotDrive));
 
+    m_AutonomousManager.initialize();
+    
     buildAutos();
   }
 
@@ -108,12 +113,14 @@ public class RobotContainer {
     //         m_robotDrive));
 
     m_driverController.a().onTrue(new IntakeCommand(m_IntakeSubsystem));
-    m_driverController.b().onTrue(new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, 1));
-    // m_driverController.x().whileTrue(new AmpDownCommand(m_AmpSubsystem));
+    m_driverController.b().whileTrue(new IntakeSpitCommand(m_IntakeSubsystem));
+/* from speaker */ m_driverController.rightBumper().onTrue(Commands.runOnce(() -> m_LifterSubsystem.setAngle(53))
+    .andThen(new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, .5))); 
+/* from stage */ m_driverController.leftBumper().onTrue(Commands.runOnce(() -> m_LifterSubsystem.setAngle(40))
+  .andThen(new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, .5)));
     m_driverController.povUp().onTrue(new IntakeNoteCommand(m_AmpSubsystem, m_IntakeSubsystem));
     m_driverController.povRight().onTrue(new AmpUpCommand(m_IntakeSubsystem, m_MoveAmpSubsystem));
     m_driverController.povDown().onTrue(new AmpShootCommand(m_AmpSubsystem, m_MoveAmpSubsystem));
-
   }
 
     
@@ -169,11 +176,12 @@ public class RobotContainer {
   }
 
   public void buildAutos() {
-    sendableChooser= new SendableChooser<String>();
+    sendableChooser = new SendableChooser<String>();
 
     addAuto("DriveBack", AutoBuilder.buildAuto("DriveBack"));
     addAuto("BankAndForth", AutoBuilder.buildAuto("Back and forth"));
     addAuto("test", AutoBuilder.buildAuto("test"));
+    addAuto("TwoNote2", AutoBuilder.buildAuto("TwoNote2"));
 
     SmartDashboard.putData("Autonomous Chooser", sendableChooser);
   }

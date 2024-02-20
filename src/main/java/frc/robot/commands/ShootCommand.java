@@ -14,14 +14,14 @@ public class ShootCommand extends Command {
   public IntakeSubsystem m_IntakeSubsystem;
   public double m_speed;
   Timer timer = new Timer();
+  
   /** Creates a new ShootCommand. */
   public ShootCommand(ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem, double speed) {
-    // Use addRequirements() here to declare subsystem dependencies.
+
     m_ShooterSubsystem = shooterSubsystem;
     m_IntakeSubsystem = intakeSubsystem;
     m_speed = speed;
     addRequirements(m_ShooterSubsystem, m_IntakeSubsystem);
-  
   }
 
   // Called when the command is initially scheduled.
@@ -35,7 +35,7 @@ public class ShootCommand extends Command {
   @Override
   public void execute() {
     m_ShooterSubsystem.shoot(.5);
-    if(timer.hasElapsed(3)) {
+    if(timer.hasElapsed(2)) {
       m_ShooterSubsystem.shootAdvance(1);
       m_IntakeSubsystem.advanceOn(1);
     }
@@ -46,13 +46,11 @@ public class ShootCommand extends Command {
   public void end(boolean interrupted) {
     m_ShooterSubsystem.shootOff(0);
     m_IntakeSubsystem.intakeOff(); 
-
-
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.hasElapsed(5);
+    return timer.hasElapsed(3);
   }
 }

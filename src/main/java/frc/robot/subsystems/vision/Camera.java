@@ -26,7 +26,7 @@ import frc.robot.subsystems.vision.LimelightHelpers.Results;
 public class Camera {
 
     public final static Camera DRIVE_CAMERA =  new Camera("limelight-drive",
-            new Transform2d(new Translation2d(0.5, 0.0),
+            new Transform2d(new Translation2d(0.2286, .2032),
                     new Rotation2d(0)));
 
     public final static Camera SHOOT_CAMERA =  new Camera("limelight-shoot",
@@ -98,12 +98,12 @@ public class Camera {
                 Pose2d pose = getPose(results).toPose2d();
                 Pose2d transformed =
                     new Pose2d(
-                       pose.getX() + layout.getFieldLength()/2,
-                       pose.getY() + layout.getFieldWidth()/2,
+                       pose.getX() + getFieldLayout().getFieldLength()/2,
+                       pose.getY() + getFieldLayout().getFieldWidth()/2,
                        new Rotation2d(pose.getRotation().getRadians()))
-                    .transformBy(robotToCam.inverse());
+                    ;//.transformBy(robotToCam.inverse());
 
-                poseEstimates.add(new PoseInstance(transformed, timestamp));
+                poseEstimates.add(new PoseInstance(pose, timestamp));
             }
         }
         SmartDashboard.putNumber("poses", poseEstimates.size());

@@ -1,0 +1,76 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.41,
+      "y": 5.56
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Lift 40"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "XYZShoot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeOn"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "IntakeOne2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Lift 53"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "XYZShoot"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

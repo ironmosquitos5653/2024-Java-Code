@@ -72,11 +72,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     
     tab.addString("Pose", this::getFomattedPose).withPosition(0, 0).withSize(2, 0);
     tab.add("Field", field2d).withPosition(2, 0).withSize(6, 4);
-
-    SmartDashboard.putString("4", getFomattedPose(Camera.getFieldLayout().getTagPose(4).get().toPose2d()));
-    
-    SmartDashboard.putString("7", getFomattedPose(Camera.getFieldLayout().getTagPose(7).get().toPose2d()));
-
   }
 
   void resetPosition(Rotation2d rotation, Pose2d pose ) {
@@ -85,13 +80,13 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    for(frc.robot.subsystems.vision.Camera.PoseInstance p: Camera.DRIVE_CAMERA.getLatest()) {
-        poseEstimator.addVisionMeasurement(p.getPose(), p.getTimestamp());
-    }
-    for( PoseInstance p: Camera.SHOOT_CAMERA.getLatest()) {
-       SmartDashboard.putString("Shoot Camera Pose", getFomattedPose(p.getPose()));
-        poseEstimator.addVisionMeasurement(p.getPose(), p.getTimestamp());
-    }
+    // for(frc.robot.subsystems.vision.Camera.PoseInstance p: Camera.DRIVE_CAMERA.getLatest()) {
+    //     poseEstimator.addVisionMeasurement(p.getPose(), p.getTimestamp());
+    // }
+    // for( PoseInstance p: Camera.SHOOT_CAMERA.getLatest()) {
+    //    SmartDashboard.putString("Shoot Camera Pose", getFomattedPose(p.getPose()));
+    //     poseEstimator.addVisionMeasurement(p.getPose(), p.getTimestamp());
+    // }
     SmartDashboard.putString("topics", Camera.SHOOT_CAMERA.getTopics());
     // Update pose estimator with driveSubsystem sensors
     poseEstimator.update(
@@ -139,15 +134,15 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   }
 
   public double getVerticalShootAngle() {
-<<<<<<< Updated upstream
+
     double angle = SmartDashboard.getNumber("Shoot Angle", 30);
     return angle;
-=======
+    /* 
     Translation3d target = getShootTarget();
     double distance = getSpeakerDistance();
 
     return Math.atan(Constants.VisionConstants.TARGET_HEIGHT_DIFF/distance);
->>>>>>> Stashed changes
+    */
   }
 
   public double getSpeakerDistance() {

@@ -10,6 +10,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.RobotState;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,29 +24,59 @@ public class MoveAmpSubsystem extends SubsystemBase {
 
   private AbsoluteEncoder ampEncoder;
 
-  private double targetPostiton = .56;
+  private double targetPostiton = .55;
 
   PIDController pidController;
 
   public MoveAmpSubsystem() {
     pidController = new PIDController(1.2, 0.1, 0);
 
-    pidController.setSetpoint(.56);
+    pidController.setSetpoint(.55);
     amp = new CANSparkMax(deviceIDamp, MotorType.kBrushless);
     amp.restoreFactoryDefaults();
     ampEncoder = amp.getAbsoluteEncoder(Type.kDutyCycle);
+    
+    ShuffleboardTab tab = Shuffleboard.getTab("Amp");
+    tab.addNumber("Error", pidController::getPositionError).withPosition(0, 0).withSize(2, 0);
+    tab.addNumber("position", this::getMeasurement).withPosition(1, 0).withSize(2, 0);
+    tab.addNumber("setpoint", pidController::getSetpoint).withPosition(2, 0).withSize(2, 0);
+    tab.addNumber("speed", amp::get).withPosition(3, 0).withSize(2, 0);
   }
 
+  boolean off = false;
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("position", getMeasurement());
-    SmartDashboard.putNumber("Set Point", targetPostiton);
-    double speed = pidController.calculate(getMeasurement());
-    SmartDashboard.putNumber("Speed", speed);
-    if(speed > .2) {
-      speed = .2;
+    isDisabled();
+    if ( (targetPostiton == .55 && getMeasurement() > .55) || (off && targetPostiton == .55)) {
+     amp.set(0);
+     off = true;
+    } else {
+      off = false;
+      double speed = pidController.calculate(getMeasurement());
+
+      if(speed > .2) {
+        speed = .2;
+      }
+      if (getMeasurement() < .3) {
+        if (speed < -.1) {
+          speed = -.1;
+        }
+      }
+      amp.set(speed);
     }
-    amp.set(speed);
+  }
+
+  private boolean disabled = true;
+
+  private boolean isDisabled() {
+    if (disabled != RobotState.isDisabled()) {
+      if ( ! RobotState.isDisabled()) {
+        pidController.reset();
+      }
+    }
+    disabled = ! RobotState.isDisabled();
+
+    return disabled;
   }
   
   public double getMeasurement() {

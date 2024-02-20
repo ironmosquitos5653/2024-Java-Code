@@ -41,7 +41,7 @@ public class AmpShootCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     m_AmpSubsystem.ampShoot(0);
-    m_MoveAmpSubsystem.setTargetPosition(.56);
+    m_MoveAmpSubsystem.setTargetPosition(.55);
   }
 
   // Returns true when the command should end.
