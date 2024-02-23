@@ -111,7 +111,6 @@ public class RobotContainer {
     //     .whileTrue(new RunCommand(
     //         () -> m_robotDrive.setX(),
     //         m_robotDrive));
-
     m_driverController.a().onTrue(new IntakeCommand(m_IntakeSubsystem));
     m_driverController.b().whileTrue(new IntakeSpitCommand(m_IntakeSubsystem));
 /* from speaker */ m_driverController.rightBumper().onTrue(Commands.runOnce(() -> m_LifterSubsystem.setAngle(53))
@@ -182,6 +181,7 @@ public class RobotContainer {
     addAuto("BankAndForth", AutoBuilder.buildAuto("Back and forth"));
     addAuto("test", AutoBuilder.buildAuto("test"));
     addAuto("TwoNote2", AutoBuilder.buildAuto("TwoNote2"));
+    addAuto("TwoNote3", AutoBuilder.buildAuto("TwoNote3"));
 
     SmartDashboard.putData("Autonomous Chooser", sendableChooser);
   }

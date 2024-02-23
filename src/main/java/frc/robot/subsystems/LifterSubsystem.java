@@ -19,7 +19,6 @@ public class LifterSubsystem extends SubsystemBase {
 
   private static final int deviceIDlifter = 16;
   private CANSparkMax lifter; 
-  private final Pigeon2 m_gyro = new Pigeon2(21);
 
   private PIDController pidController;
   private PoseEstimatorSubsystem m_PoseEstimatorSubsystem;
@@ -33,7 +32,6 @@ public class LifterSubsystem extends SubsystemBase {
     lifter = new CANSparkMax(deviceIDlifter, MotorType.kBrushless);
     lifter.restoreFactoryDefaults();
     encoder = lifter.getAbsoluteEncoder(Type.kDutyCycle);
-    m_gyro.reset();
     pidController = new PIDController(.015, .0003, 0);
 
     ShuffleboardTab tab = Shuffleboard.getTab("Lifter");
@@ -51,7 +49,7 @@ public class LifterSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     isDisabled();
-    double targetAngle = getTargetAngle(); //m_PoseEstimatorSubsystem.getVerticalShootAngle();
+    //m_PoseEstimatorSubsystem.getVerticalShootAngle();
     // 53 at speaker
     // 40 at stage
     // 31 speed .5

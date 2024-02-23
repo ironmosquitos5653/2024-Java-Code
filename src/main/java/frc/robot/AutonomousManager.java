@@ -30,9 +30,9 @@ public class AutonomousManager {
 
 public void initialize() {
     NamedCommands.registerCommand("IntakeOn", new IntakeCommand(m_IntakeSubsystem));
-    NamedCommands.registerCommand("XYZShoot", new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, .5));
-    NamedCommands.registerCommand("Lift 30", new RunCommand(() -> m_LifterSubsystem.setAngle(30), m_LifterSubsystem));
-    NamedCommands.registerCommand("Lift 35", new RunCommand(() -> m_LifterSubsystem.setAngle(35), m_LifterSubsystem));
+    NamedCommands.registerCommand("Shoot", new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, .5));
+    // NamedCommands.registerCommand("Lift 30", new RunCommand(() -> m_LifterSubsystem.setAngle(30), m_LifterSubsystem));
+    // NamedCommands.registerCommand("Lift 35", new RunCommand(() -> m_LifterSubsystem.setAngle(35), m_LifterSubsystem));
     NamedCommands.registerCommand("Lift 40", new LiftCommand(m_LifterSubsystem, 40));
     NamedCommands.registerCommand("Lift 53", new LiftCommand(m_LifterSubsystem, 53));
   }

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.0,
-        "y": 2.0
+        "x": 0.6766573533147066,
+        "y": 6.688710831967119
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.6454378850728304,
-        "y": 2.0
+        "x": 1.6200098667902392,
+        "y": 8.02615979685564
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.8684386218431042,
-        "y": 2.0
+        "x": 7.822476735862562,
+        "y": 7.43
       },
       "prevControl": {
-        "x": 1.3905256817159555,
-        "y": 2.0
+        "x": 6.516452305631884,
+        "y": 7.546955457547279
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -179.4139786567911,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Test Stuff",
+  "folder": "Two&Three Note 1",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
