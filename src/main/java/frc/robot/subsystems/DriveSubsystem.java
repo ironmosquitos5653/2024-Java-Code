@@ -57,6 +57,9 @@ public class DriveSubsystem extends SubsystemBase {
   // The gyro sensor
   private final Pigeon2 m_gyro = new Pigeon2(20);
 
+  // Field relative difference betwen start angle and field 0.
+  private double angleOffset = 0;
+
   // Slew rate filter variables for controlling lateral acceleration
   private double m_currentRotation = 0.0;
   private double m_currentTranslationDir = 0.0;
@@ -268,7 +271,17 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public Rotation2d getGyroscopeRotation() {
-    return m_gyro.getRotation2d();
+      return new Rotation2d(adjustFieldAngle(m_gyro.getRotation2d().getDegrees() + angleOffset));
+  }
+
+  public double adjustFieldAngle(double angle) {
+    if (angle > 180) {
+      return -360 + angle;
+    }
+    else if (angle < -180) {
+      return 360 + angle;
+    }
+    return angle;
   }
 
   /**
@@ -317,5 +330,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void setAutoStart(Pose2d pose) {
     poseEstimatorSubsystem.resetPosition(m_gyro.getRotation2d(), pose);
+    angleOffset = pose.getRotation().getDegrees();
+    if (poseEstimatorSubsystem.blueAlliance()) {
+      angleOffset = - angleOffset;
+    }
   }
 }
