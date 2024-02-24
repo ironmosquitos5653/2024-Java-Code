@@ -48,7 +48,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "PathOne3"
+                  "pathName": "BM1"
                 }
               }
             ]
@@ -79,7 +79,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "PathTwo3"
+                  "pathName": "BM2"
                 }
               }
             ]
@@ -104,16 +104,10 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "PathThree3"
+                  "pathName": "BM3"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "PathFour3"
           }
         },
         {

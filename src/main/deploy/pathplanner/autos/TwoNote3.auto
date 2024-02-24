@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "PathOne3"
+                  "pathName": "BM1"
                 }
               }
             ]
@@ -67,7 +67,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "PathTwo3"
+                  "pathName": "BM2"
                 }
               }
             ]

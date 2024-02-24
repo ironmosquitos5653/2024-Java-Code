@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 2.71,
-        "y": 5.52
+        "y": 4.11
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3780207286767174,
-        "y": 5.5113457342958245
+        "x": 1.378020387976168,
+        "y": 4.101398331404659
       },
       "isLocked": false,
       "linkedName": null
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 2.71,
-        "y": 4.108629428714312
+        "y": 5.520158783741731
       },
       "prevControl": {
         "x": 1.1709271172715987,
-        "y": 4.006128513773141
+        "y": 5.4176578688005605
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.5,
-      "rotationDegrees": 0,
+      "rotationDegrees": 23.964295281124976,
       "rotateFast": false
     }
   ],
@@ -51,7 +51,7 @@
   "reversed": false,
   "folder": "Two&ThreeNote 3",
   "previewStartingState": {
-    "rotation": 0.0,
+    "rotation": -33.589886033080994,
     "velocity": 0
   },
   "useDefaultConstraints": true
