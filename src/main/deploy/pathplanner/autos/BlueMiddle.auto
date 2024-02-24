@@ -14,13 +14,19 @@
         {
           "type": "named",
           "data": {
-            "name": "ShooterOn"
+            "name": "Lift 53"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.75
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Lift 53"
+            "name": "ShooterOn"
           }
         },
         {
