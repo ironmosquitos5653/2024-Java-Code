@@ -40,5 +40,6 @@ public void initialize() {
     NamedCommands.registerCommand("Lift 35", new LiftCommand(m_LifterSubsystem, 36));
     NamedCommands.registerCommand("Lift 53", new LiftCommand(m_LifterSubsystem, 53));
     NamedCommands.registerCommand("Lift B", new LiftCommand(m_LifterSubsystem, 36));
+    NamedCommands.registerCommand("Lift Stage Side", new LiftCommand(m_LifterSubsystem, 32));
   }
 }

@@ -188,6 +188,7 @@ public class RobotContainer {
     addAuto("BlueRight", AutoBuilder.buildAuto("BlueRight"));
     addAuto("ThreeNote2", AutoBuilder.buildAuto("ThreeNote2"));
     addAuto("BlueLeftAuto", AutoBuilder.buildAuto("BlueLeftAuto"));
+    addAuto("RedLeftAuto", AutoBuilder.buildAuto("RedLeftAuto"));
 
     SmartDashboard.putData("Autonomous Chooser", sendableChooser);
   }
