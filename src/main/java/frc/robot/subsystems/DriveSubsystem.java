@@ -112,6 +112,7 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+    SmartDashboard.putNumber("Drive Gyro", m_gyro.getAngle());
   }
 
   /**

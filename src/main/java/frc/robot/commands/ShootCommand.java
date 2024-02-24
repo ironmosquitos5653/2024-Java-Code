@@ -7,19 +7,22 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LifterSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShootCommand extends Command {
   public ShooterSubsystem m_ShooterSubsystem;
   public IntakeSubsystem m_IntakeSubsystem;
+  public LifterSubsystem m_LifterSubsystem;
   public double m_speed;
   Timer timer = new Timer();
   
   /** Creates a new ShootCommand. */
-  public ShootCommand(ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem, double speed) {
+  public ShootCommand(ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem, LifterSubsystem lifterSubsystem, double speed) {
 
     m_ShooterSubsystem = shooterSubsystem;
     m_IntakeSubsystem = intakeSubsystem;
+    m_LifterSubsystem = lifterSubsystem;
     m_speed = speed;
     addRequirements(m_ShooterSubsystem, m_IntakeSubsystem);
   }
@@ -46,6 +49,7 @@ public class ShootCommand extends Command {
   public void end(boolean interrupted) {
     m_ShooterSubsystem.shootOff(0);
     m_IntakeSubsystem.intakeOff(); 
+    m_LifterSubsystem.setAngle(0);
   }
 
   // Returns true when the command should end.
