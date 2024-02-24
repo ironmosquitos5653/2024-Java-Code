@@ -24,7 +24,7 @@ public class LifterSubsystem extends SubsystemBase {
   private PoseEstimatorSubsystem m_PoseEstimatorSubsystem;
 
   private AbsoluteEncoder encoder = null;
-  private double targetAngle = 40;
+  private double targetAngle = 0;
 
   /** Creates a new LifterSubsystem. */
   public LifterSubsystem(PoseEstimatorSubsystem poseEstimatorSubsystem) {
