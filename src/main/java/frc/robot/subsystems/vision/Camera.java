@@ -7,7 +7,6 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -19,7 +18,6 @@ import edu.wpi.first.networktables.TimestampedString;
 import edu.wpi.first.networktables.Topic;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.vision.LimelightHelpers.LimelightTarget_Fiducial;
 import frc.robot.subsystems.vision.LimelightHelpers.Results;
 
@@ -77,13 +75,13 @@ public class Camera {
         return layout;
     }
 
-    private Pose3d getPose(Results results) {
+    private Pose2d getPose(Results results) {
         var alliance = DriverStation.getAlliance();
         if(alliance.isEmpty() || alliance.get() == Alliance.Blue)
         {
-            return results.getBotPose3d_wpiBlue();
+            return results.getBotPose2d_wpiBlue();
         }
-        return results.getBotPose3d_wpiRed();
+        return results.getBotPose2d_wpiRed();
     }
 
     public ArrayList<PoseInstance> getLatest() {
@@ -95,7 +93,7 @@ public class Camera {
 
             if (results.targets_Fiducials.length > 0) {
 
-                Pose2d pose = getPose(results).toPose2d();
+                Pose2d pose = getPose(results);
                 Pose2d transformed =
                     new Pose2d(
                        pose.getX() + getFieldLayout().getFieldLength()/2,
@@ -106,7 +104,6 @@ public class Camera {
                 poseEstimates.add(new PoseInstance(pose, timestamp));
             }
         }
-        SmartDashboard.putNumber("poses", poseEstimates.size());
         return poseEstimates;
     }
 

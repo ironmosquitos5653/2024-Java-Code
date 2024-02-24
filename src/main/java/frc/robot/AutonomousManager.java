@@ -10,7 +10,9 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LiftCommand;
+import frc.robot.commands.ShootAutoCommand;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.ShooterToggleCommand;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LifterSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -30,10 +32,13 @@ public class AutonomousManager {
 
 public void initialize() {
     NamedCommands.registerCommand("IntakeOn", new IntakeCommand(m_IntakeSubsystem));
-    NamedCommands.registerCommand("Shoot", new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, .5));
+    NamedCommands.registerCommand("Shoot", new ShootAutoCommand(m_ShooterSubsystem, m_IntakeSubsystem, .5));
     // NamedCommands.registerCommand("Lift 30", new RunCommand(() -> m_LifterSubsystem.setAngle(30), m_LifterSubsystem));
-    // NamedCommands.registerCommand("Lift 35", new RunCommand(() -> m_LifterSubsystem.setAngle(35), m_LifterSubsystem));
+    NamedCommands.registerCommand("ShooterOn", new ShooterToggleCommand(m_ShooterSubsystem, .5));
+    NamedCommands.registerCommand("ShooterOff", new ShooterToggleCommand(m_ShooterSubsystem, 0));
     NamedCommands.registerCommand("Lift 40", new LiftCommand(m_LifterSubsystem, 40));
+    NamedCommands.registerCommand("Lift 35", new LiftCommand(m_LifterSubsystem, 36));
     NamedCommands.registerCommand("Lift 53", new LiftCommand(m_LifterSubsystem, 53));
+    NamedCommands.registerCommand("Lift B", new LiftCommand(m_LifterSubsystem, 36));
   }
 }

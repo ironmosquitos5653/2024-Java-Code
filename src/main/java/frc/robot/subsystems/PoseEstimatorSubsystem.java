@@ -84,10 +84,9 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     //     poseEstimator.addVisionMeasurement(p.getPose(), p.getTimestamp());
     // }
     // for( PoseInstance p: Camera.SHOOT_CAMERA.getLatest()) {
-    //    SmartDashboard.putString("Shoot Camera Pose", getFomattedPose(p.getPose()));
     //     poseEstimator.addVisionMeasurement(p.getPose(), p.getTimestamp());
     // }
-    SmartDashboard.putString("topics", Camera.SHOOT_CAMERA.getTopics());
+
     // Update pose estimator with driveSubsystem sensors
     poseEstimator.update(
       driveSubsystem.getGyroscopeRotation(),

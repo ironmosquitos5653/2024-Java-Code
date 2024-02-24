@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4957954892638068,
-      "y": 5.551427198444411
+      "x": 0.89,
+      "y": 4.45
     },
-    "rotation": 0
+    "rotation": -58.46520809481176
   },
   "command": {
     "type": "sequential",
@@ -30,12 +30,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "Lift 40"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -48,7 +42,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "PathOne3"
+                  "pathName": "DriveOut1"
                 }
               }
             ]
@@ -57,32 +51,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Lift 35"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Lift 40"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeOn"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "PathTwo3"
-                }
-              }
-            ]
+            "pathName": "DriveIn1"
           }
         },
         {
@@ -104,7 +79,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "PathThree3"
+                  "pathName": "DriveOut2"
                 }
               }
             ]
@@ -113,7 +88,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "PathFour3"
+            "pathName": "Copy of DriveIn1"
           }
         },
         {

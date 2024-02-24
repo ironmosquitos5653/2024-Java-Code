@@ -9,14 +9,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShootCommand extends Command {
+public class ShootAutoCommand extends Command {
   public ShooterSubsystem m_ShooterSubsystem;
   public IntakeSubsystem m_IntakeSubsystem;
   public double m_speed;
   Timer timer = new Timer();
   
   /** Creates a new ShootCommand. */
-  public ShootCommand(ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem, double speed) {
+  public ShootAutoCommand(ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem, double speed) {
 
     m_ShooterSubsystem = shooterSubsystem;
     m_IntakeSubsystem = intakeSubsystem;
@@ -34,23 +34,20 @@ public class ShootCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_ShooterSubsystem.shoot(.5);
-    if(timer.hasElapsed(.8)) {
       m_ShooterSubsystem.shootAdvance(1);
-      m_IntakeSubsystem.advanceOn(1);
-    }
+      m_IntakeSubsystem.advanceOn(.7);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_ShooterSubsystem.shootOff(0);
+    m_ShooterSubsystem.shootAdvance(0);
     m_IntakeSubsystem.intakeOff(); 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.hasElapsed(1.5);
+    return timer.hasElapsed(1);
   }
 }

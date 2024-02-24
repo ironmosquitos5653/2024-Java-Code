@@ -9,6 +9,7 @@ import java.util.Arrays;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -22,6 +23,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
 import frc.utils.SwerveUtils;
@@ -80,13 +82,16 @@ public class DriveSubsystem extends SubsystemBase {
   }
   public void setPoseEstimator(PoseEstimatorSubsystem p) {
     poseEstimatorSubsystem = p;
-        AutoBuilder.configureHolonomic(
+
+    AutoBuilder.configureHolonomic(
         this::getPose,
         this::setAutoStart,
         () -> DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates()),
         this::runVelocity,
-        new HolonomicPathFollowerConfig(
-            DriveConstants.kMaxSpeedMetersPerSecond, ModuleConstants.kWheelDiameterMeters/2, new ReplanningConfig()),
+        new HolonomicPathFollowerConfig(  
+            new PIDConstants(6.0, 0.0, 0.0),
+            new PIDConstants(5.0, 0.0, 0.0),
+            DriveConstants.kMaxSpeedMetersPerSecond, .381, new ReplanningConfig(),.02),
         () ->
             DriverStation.getAlliance().isPresent()
                 && DriverStation.getAlliance().get() == Alliance.Red,
@@ -150,6 +155,7 @@ public class DriveSubsystem extends SubsystemBase {
     double xSpeedCommanded;
     double ySpeedCommanded;
 
+    SmartDashboard.putString("DRIVE", xSpeed + " - " + ySpeed);
     if (rateLimit) {
       // Convert XY to polar for rate limiting
       double inputTranslationDir = Math.atan2(ySpeed, xSpeed);

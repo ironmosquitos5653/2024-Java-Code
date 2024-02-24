@@ -24,6 +24,7 @@ import frc.robot.commands.AmpUpCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeNoteCommand;
 import frc.robot.commands.IntakeSpitCommand;
+import frc.robot.commands.ShootAutoCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.AmpSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -93,6 +94,8 @@ public class RobotContainer {
             m_robotDrive));
 
     m_AutonomousManager.initialize();
+
+    SmartDashboard.putData(new ShootAutoCommand(m_ShooterSubsystem, m_IntakeSubsystem, .5));
     
     buildAutos();
   }
@@ -182,6 +185,9 @@ public class RobotContainer {
     addAuto("test", AutoBuilder.buildAuto("test"));
     addAuto("TwoNote2", AutoBuilder.buildAuto("TwoNote2"));
     addAuto("TwoNote3", AutoBuilder.buildAuto("TwoNote3"));
+    addAuto("BlueRight", AutoBuilder.buildAuto("BlueRight"));
+    addAuto("ThreeNote2", AutoBuilder.buildAuto("ThreeNote2"));
+    addAuto("BlueLeftAuto", AutoBuilder.buildAuto("BlueLeftAuto"));
 
     SmartDashboard.putData("Autonomous Chooser", sendableChooser);
   }
