@@ -1,7 +1,13 @@
 package frc.robot.subsystems;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NavigableMap;
 import java.util.Optional;
+import java.util.TreeMap;
+
+import org.photonvision.EstimatedRobotPose;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
@@ -23,7 +29,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.vision.Camera;
-import frc.robot.subsystems.vision.Camera.PoseInstance;
 
 public class PoseEstimatorSubsystem extends SubsystemBase {
 
@@ -83,9 +88,11 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     // for(frc.robot.subsystems.vision.Camera.PoseInstance p: Camera.DRIVE_CAMERA.getLatest()) {
     //     poseEstimator.addVisionMeasurement(p.getPose(), p.getTimestamp());
     // }
-    // for( PoseInstance p: Camera.SHOOT_CAMERA.getLatest()) {
-    //     poseEstimator.addVisionMeasurement(p.getPose(), p.getTimestamp());
-    // }
+
+    Optional<EstimatedRobotPose> estimatedPose = Camera.SHOOT_CAMERA.getEstimatedGlobalPose();
+    if(estimatedPose.isPresent()) {
+      poseEstimator.addVisionMeasurement(estimatedPose.get().estimatedPose.toPose2d(), estimatedPose.get().timestampSeconds);
+    }
 
     // Update pose estimator with driveSubsystem sensors
     poseEstimator.update(
@@ -175,15 +182,15 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     return 90 - angle;
 }
 
-private Translation3d getShootTarget() {
-  if ( blueAlliance()) {
-    return Constants.VisionConstants.BLUE_SPEAKER_TARGET;
+  private Translation3d getShootTarget() {
+    if ( blueAlliance()) {
+      return Constants.VisionConstants.BLUE_SPEAKER_TARGET;
+    }
+    return Constants.VisionConstants.RED_SPEAKER_TARGET;
   }
-  return Constants.VisionConstants.RED_SPEAKER_TARGET;
-}
 
-public boolean blueAlliance() {
-    return DriverStation.getAlliance().get() == Alliance.Blue;
-}
+  public boolean blueAlliance() {
+      return DriverStation.getAlliance().get() == Alliance.Blue;
+  }
 
 }
