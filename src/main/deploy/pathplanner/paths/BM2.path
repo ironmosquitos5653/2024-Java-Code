@@ -20,8 +20,8 @@
         "y": 5.520158783741731
       },
       "prevControl": {
-        "x": 1.1709271172715987,
-        "y": 5.4176578688005605
+        "x": 1.5340152977334782,
+        "y": 5.455877677270232
       },
       "nextControl": null,
       "isLocked": false,
@@ -49,7 +49,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Two&ThreeNote 3",
+  "folder": "Blue Middle",
   "previewStartingState": {
     "rotation": -33.589886033080994,
     "velocity": 0

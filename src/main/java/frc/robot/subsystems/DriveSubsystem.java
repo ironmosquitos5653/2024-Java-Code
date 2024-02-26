@@ -272,7 +272,10 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public Rotation2d getGyroscopeRotation() {
-      return new Rotation2d(adjustFieldAngle(m_gyro.getRotation2d().getDegrees() + angleOffset));
+    
+    SmartDashboard.putNumber("Orientation", adjustFieldAngle(m_gyro.getRotation2d().getDegrees() + angleOffset));
+    return m_gyro.getRotation2d();
+      //return new Rotation2d(adjustFieldAngle(m_gyro.getRotation2d().getDegrees() + angleOffset));
   }
 
   public double adjustFieldAngle(double angle) {

@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 2.86,
-        "y": 6.98
+        "x": 2.8812635462893987,
+        "y": 6.936895255470003
       },
       "prevControl": {
-        "x": 2.057311750987138,
-        "y": 6.837970766850624
+        "x": 2.078647568426297,
+        "y": 6.707576404651974
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,11 +45,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 40.92593504200506,
+    "rotation": 28.43476314954997,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Two&ThreeNote 3",
+  "folder": "Blue Middle",
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0
