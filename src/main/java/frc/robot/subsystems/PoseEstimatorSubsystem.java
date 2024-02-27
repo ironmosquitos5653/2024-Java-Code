@@ -103,8 +103,13 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       Transform3d x = Camera.SHOOT_CAMERA.getPhotonCamera().getLatestResult().getBestTarget().getBestCameraToTarget();
       Optional<Pose3d> tagPose = Camera.getFieldLayout().getTagPose(target.getFiducialId());
       if (tagPose.isPresent()) {
-          Pose2d p = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(), tagPose.get(), Camera.SHOOT_CAMERA.getRobotToCamera().inverse()).toPose2d(),
+          Pose2d p = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(), tagPose.get(), Camera.SHOOT_CAMERA.getRobotToCamera().inverse()).toPose2d();
           SmartDashboard.putString("estimated pose", getFomattedPose(p));
+          SmartDashboard.putNumber(">> X", target.getBestCameraToTarget().getX());
+          SmartDashboard.putNumber(">> Y", target.getBestCameraToTarget().getY());
+          SmartDashboard.putNumber(">> Z", target.getBestCameraToTarget().getZ());
+          SmartDashboard.putNumber(">> Yaw", target.getYaw());
+          SmartDashboard.putNumber(">> Pitch", target.getPitch());
           poseEstimator.addVisionMeasurement(p, estimatedPose.get().timestampSeconds);
       }
     }
