@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.TreeMap;
 
 import org.photonvision.EstimatedRobotPose;
+import org.photonvision.PhotonUtils;
+import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.Vector;
@@ -15,6 +17,7 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.numbers.N3;
@@ -96,8 +99,14 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
     Optional<EstimatedRobotPose> estimatedPose = Camera.SHOOT_CAMERA.getEstimatedGlobalPose();
     if(estimatedPose.isPresent()) {
-      SmartDashboard.putString("estimated pose", getFomattedPose(estimatedPose.get().estimatedPose.toPose2d()));
-      poseEstimator.addVisionMeasurement(estimatedPose.get().estimatedPose.toPose2d(), estimatedPose.get().timestampSeconds);
+      PhotonTrackedTarget target = Camera.SHOOT_CAMERA.getPhotonCamera().getLatestResult().getBestTarget();
+      Transform3d x = Camera.SHOOT_CAMERA.getPhotonCamera().getLatestResult().getBestTarget().getBestCameraToTarget();
+      Optional<Pose3d> tagPose = Camera.getFieldLayout().getTagPose(target.getFiducialId());
+      if (tagPose.isPresent()) {
+          Pose2d p = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(), tagPose.get(), Camera.SHOOT_CAMERA.getRobotToCamera().inverse()).toPose2d(),
+          SmartDashboard.putString("estimated pose", getFomattedPose(p));
+          poseEstimator.addVisionMeasurement(p, estimatedPose.get().timestampSeconds);
+      }
     }
 
     // Update pose estimator with driveSubsystem sensors
@@ -147,8 +156,9 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   public double getVerticalShootAngle() {
     double distance = getSpeakerDistance();
+
     double angle = Math.atan(Constants.VisionConstants.TARGET_HEIGHT_DIFF/distance);
-    SmartDashboard.putNumber("vertical angle", angle);
+    SmartDashboard.putNumber("Vertical Angle", angle);
     return angle;
   }
 
