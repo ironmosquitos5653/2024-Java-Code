@@ -28,8 +28,8 @@ public class Camera {
     */
 
     public final static Camera SHOOT_CAMERA =  new Camera("shootcamera",
-            new Transform3d(new Translation3d(0.23495, 0.3175, 0),
-                    new Rotation3d(0, 0, Units.degreesToRadians(180))));
+        new Transform3d(new Translation3d(-0.23495, -0.3175, 0),
+        new Rotation3d(0, Units.degreesToRadians(-12.8), Units.degreesToRadians(180))));
 
     private final String name;
     private final Transform3d robotToCam;

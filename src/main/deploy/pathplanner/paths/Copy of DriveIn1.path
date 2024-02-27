@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.308476348982753,
-        "y": 2.417402903931347
+        "x": 8.3,
+        "y": 2.436512808166183
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.91973160412578,
-        "y": 2.468238708488745
+        "x": 6.911255255143028,
+        "y": 2.4873486127235807
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BRNote2"
     },
     {
       "anchor": {

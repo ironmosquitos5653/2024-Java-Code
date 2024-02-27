@@ -89,9 +89,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     getVerticalShootAngle();
-    if(Camera.SHOOT_CAMERA.getPhotonCamera().getLatestResult() != null && Camera.SHOOT_CAMERA.getPhotonCamera().getLatestResult().getBestTarget() != null) {
-      SmartDashboard.putNumber("tag", Camera.SHOOT_CAMERA.getPhotonCamera().getLatestResult().getBestTarget().getYaw());
-    }
+    getSpeakerDistance();
+    getHorizontalShootAngle();
 
     // for(frc.robot.subsystems.vision.Camera.PoseInstance p: Camera.DRIVE_CAMERA.getLatest()) {
     //     poseEstimator.addVisionMeasurement(p.getPose(), p.getTimestamp());
@@ -112,6 +111,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
           SmartDashboard.putNumber(">> Pitch", target.getPitch());
           poseEstimator.addVisionMeasurement(p, estimatedPose.get().timestampSeconds);
       }
+      // poseEstimator.addVisionMeasurement(estimatedPose.get().estimatedPose.toPose2d(), estimatedPose.get().timestampSeconds);
     }
 
     // Update pose estimator with driveSubsystem sensors
@@ -162,7 +162,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   public double getVerticalShootAngle() {
     double distance = getSpeakerDistance();
 
-    double angle = Math.atan(Constants.VisionConstants.TARGET_HEIGHT_DIFF/distance);
+    double angle = Units.radiansToDegrees(Math.atan(Constants.VisionConstants.TARGET_HEIGHT_DIFF/distance));
     SmartDashboard.putNumber("Vertical Angle", angle);
     return angle;
   }
@@ -173,7 +173,9 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
      double xdiff = Math.abs(pose.getX() - target.getX());
      double ydiff = Math.abs(pose.getY() - target.getY());
 
-    return Math.sqrt(ydiff*ydiff + xdiff*xdiff );
+    double distance = Math.sqrt(ydiff*ydiff + xdiff*xdiff );
+    SmartDashboard.putNumber("* distance", distance);
+    return distance;
   }
 
   public double getHorizontalShootAngle() {
@@ -183,7 +185,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     double ydiff = Math.abs(pose.getY() - target.getY());
 
     double angle = Math.atan( ydiff / xdiff );
-
+    SmartDashboard.putNumber("*horizontal angle", angle);
     if (blueAlliance()) {
       if (pose.getY() > target.getY()) {
         return 270 - angle;
