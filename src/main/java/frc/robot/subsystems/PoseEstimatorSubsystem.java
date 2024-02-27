@@ -160,10 +160,31 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   }
 
   public double getVerticalShootAngle() {
+    return voodooMath();
+    // double distance = getSpeakerDistance();
+
+    // double angle = Units.radiansToDegrees(Math.atan(Constants.VisionConstants.TARGET_HEIGHT_DIFF/distance));
+    // SmartDashboard.putNumber("Vertical Angle", angle);
+    // return angle;
+  }
+
+  public double voodooMath() {
+    
+    double lowerBound = 36;
+    double upperBound = 53;
+    double angelRange = upperBound - lowerBound;
+
+    double upperDistance = 1.368;
+    double lowerDistance = 3.614;
+    double distanceRange = upperDistance - lowerDistance;
+
     double distance = getSpeakerDistance();
 
-    double angle = Units.radiansToDegrees(Math.atan(Constants.VisionConstants.TARGET_HEIGHT_DIFF/distance));
-    SmartDashboard.putNumber("Vertical Angle", angle);
+    double distanceOffset = distance - lowerDistance;
+    double distancePercent = distanceOffset/distanceRange;
+
+    double angle= distancePercent * angelRange + lowerBound;
+    SmartDashboard.putNumber("The Angle", angle);
     return angle;
   }
 

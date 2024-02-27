@@ -121,8 +121,11 @@ public class RobotContainer {
     m_driverController.a().onTrue(new IntakeCommand(m_IntakeSubsystem));
     m_driverController.b().whileTrue(new IntakeSpitCommand(m_IntakeSubsystem));
 
-    /* from speaker */ m_driverController.rightBumper().onTrue(Commands.runOnce(() -> m_LifterSubsystem.setAngle(53))
-    .andThen(new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, m_LifterSubsystem, .5))); 
+    /* from speaker */
+    m_driverController.rightBumper().onTrue(Commands.runOnce(() ->
+            m_LifterSubsystem.setAngle(m_PoseEstimatorSubsystem.getVerticalShootAngle())) //53
+            .andThen(new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, m_LifterSubsystem, .5))); 
+
     /* from stage */ m_driverController.leftBumper().onTrue(Commands.runOnce(() -> m_LifterSubsystem.setAngle(40))
     .andThen(new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, m_LifterSubsystem, .5)));
 
