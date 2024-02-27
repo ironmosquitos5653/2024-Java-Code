@@ -85,12 +85,18 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    getVerticalShootAngle();
+    if(Camera.SHOOT_CAMERA.getPhotonCamera().getLatestResult() != null && Camera.SHOOT_CAMERA.getPhotonCamera().getLatestResult().getBestTarget() != null) {
+      SmartDashboard.putNumber("tag", Camera.SHOOT_CAMERA.getPhotonCamera().getLatestResult().getBestTarget().getYaw());
+    }
+
     // for(frc.robot.subsystems.vision.Camera.PoseInstance p: Camera.DRIVE_CAMERA.getLatest()) {
     //     poseEstimator.addVisionMeasurement(p.getPose(), p.getTimestamp());
     // }
 
     Optional<EstimatedRobotPose> estimatedPose = Camera.SHOOT_CAMERA.getEstimatedGlobalPose();
     if(estimatedPose.isPresent()) {
+      SmartDashboard.putString("estimated pose", getFomattedPose(estimatedPose.get().estimatedPose.toPose2d()));
       poseEstimator.addVisionMeasurement(estimatedPose.get().estimatedPose.toPose2d(), estimatedPose.get().timestampSeconds);
     }
 
@@ -140,15 +146,10 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
   }
 
   public double getVerticalShootAngle() {
-
-    double angle = SmartDashboard.getNumber("Shoot Angle", 30);
-    return angle;
-    /* 
-    Translation3d target = getShootTarget();
     double distance = getSpeakerDistance();
-
-    return Math.atan(Constants.VisionConstants.TARGET_HEIGHT_DIFF/distance);
-    */
+    double angle = Math.atan(Constants.VisionConstants.TARGET_HEIGHT_DIFF/distance);
+    SmartDashboard.putNumber("vertical angle", angle);
+    return angle;
   }
 
   public double getSpeakerDistance() {

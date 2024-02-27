@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.71,
-        "y": 4.11
+        "x": 2.8334887857023094,
+        "y": 4.165959141418819
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.378020387976168,
-        "y": 4.101398331404659
+        "x": 1.5015091736784776,
+        "y": 4.1573574728234775
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BlueNoteOne"
     },
     {
       "anchor": {

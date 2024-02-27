@@ -27,28 +27,31 @@ public class Camera {
                     new Rotation2d(0)));
     */
 
-    public final static Camera SHOOT_CAMERA =  new Camera("limelight-shoot",
+    public final static Camera SHOOT_CAMERA =  new Camera("shootcamera",
             new Transform3d(new Translation3d(0.23495, 0.3175, 0),
-                    new Rotation3d(Units.degreesToRadians(180),0,0)));
+                    new Rotation3d(0, 0, Units.degreesToRadians(180))));
 
     private final String name;
     private final Transform3d robotToCam;
 
-    private Pose2d previousPose;
+    private Pose2d previousPose = new Pose2d();
 
     private final PhotonPoseEstimator photonPoseEstimator;
     private PhotonCamera camera;
 
     public Camera(String name, Transform3d robotToCam) {
+        // PhotonCamera.setVersionCheckEnabled(false);
         this.name = name;
         this.robotToCam = robotToCam;
         camera = new PhotonCamera(name);
 
-        photonPoseEstimator = new PhotonPoseEstimator(getFieldLayout(), PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camera, robotToCam);
+        photonPoseEstimator = new PhotonPoseEstimator(getFieldLayout(), PoseStrategy.AVERAGE_BEST_TARGETS, camera, robotToCam);
     }
 
     public Optional<EstimatedRobotPose> getEstimatedGlobalPose() {
-        photonPoseEstimator.setReferencePose(previousPose);
+        if(previousPose != null) {
+            photonPoseEstimator.setReferencePose(previousPose);
+        }
         Optional<EstimatedRobotPose> estimatedPose = photonPoseEstimator.update();
         if(estimatedPose.isPresent()) {
             previousPose = estimatedPose.get().estimatedPose.toPose2d();

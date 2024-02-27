@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimbSubsystem extends SubsystemBase {
 
-  private static final int deviceIDclimb = 18;
+  private static final int deviceIDclimb = 19;
   private CANSparkMax climb;
 
   /** Creates a new ClimbSubsystem. */
@@ -23,5 +23,17 @@ public class ClimbSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void up(double speed) {
+    climb.set(-speed);
+  }
+
+  public void down(double speed) {
+    climb.set(speed);
+  }
+
+  public void stop() {
+    climb.set(0);
   }
 }

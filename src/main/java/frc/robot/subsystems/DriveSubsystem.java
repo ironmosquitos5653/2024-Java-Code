@@ -20,6 +20,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -273,9 +274,10 @@ public class DriveSubsystem extends SubsystemBase {
 
   public Rotation2d getGyroscopeRotation() {
     
-    SmartDashboard.putNumber("Orientation", adjustFieldAngle(m_gyro.getRotation2d().getDegrees() + angleOffset));
-    return m_gyro.getRotation2d();
-      //return new Rotation2d(adjustFieldAngle(m_gyro.getRotation2d().getDegrees() + angleOffset));
+    SmartDashboard.putNumber("Orientation", m_gyro.getRotation2d().getDegrees() + angleOffset);
+    //SmartDashboard.putData("Rotation", m_gyro.getRotation2d());
+      //return m_gyro.getRotation2d();
+      return new Rotation2d(m_gyro.getRotation2d().getRadians() + Units.degreesToRadians(angleOffset));
   }
 
   public double adjustFieldAngle(double angle) {
@@ -334,9 +336,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void setAutoStart(Pose2d pose) {
     poseEstimatorSubsystem.resetPosition(m_gyro.getRotation2d(), pose);
-    angleOffset = pose.getRotation().getDegrees();
-    if (poseEstimatorSubsystem.blueAlliance()) {
-      angleOffset = - angleOffset;
-    }
+    // angleOffset = pose.getRotation().getDegrees();
+    // if (poseEstimatorSubsystem.blueAlliance()) {
+    //    angleOffset = - angleOffset;
+    // }
   }
 }

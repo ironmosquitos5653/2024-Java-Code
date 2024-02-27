@@ -21,12 +21,15 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AmpShootCommand;
 import frc.robot.commands.AmpUpCommand;
+import frc.robot.commands.ClimbDownCommand;
+import frc.robot.commands.ClimbUpCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeNoteCommand;
 import frc.robot.commands.IntakeSpitCommand;
 import frc.robot.commands.ShootAutoCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.AmpSubsystem;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LifterSubsystem;
@@ -61,6 +64,7 @@ public class RobotContainer {
   private final LifterSubsystem m_LifterSubsystem = new LifterSubsystem(m_PoseEstimatorSubsystem);
   private final AmpSubsystem m_AmpSubsystem = new AmpSubsystem();
   private final MoveAmpSubsystem m_MoveAmpSubsystem = new MoveAmpSubsystem();
+  private final ClimbSubsystem m_ClimbSubsystem = new ClimbSubsystem();
   private final AutonomousManager m_AutonomousManager = new AutonomousManager(m_IntakeSubsystem, m_LifterSubsystem, m_ShooterSubsystem);
 
 
@@ -116,13 +120,18 @@ public class RobotContainer {
     //         m_robotDrive));
     m_driverController.a().onTrue(new IntakeCommand(m_IntakeSubsystem));
     m_driverController.b().whileTrue(new IntakeSpitCommand(m_IntakeSubsystem));
-/* from speaker */ m_driverController.rightBumper().onTrue(Commands.runOnce(() -> m_LifterSubsystem.setAngle(53))
+
+    /* from speaker */ m_driverController.rightBumper().onTrue(Commands.runOnce(() -> m_LifterSubsystem.setAngle(53))
     .andThen(new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, m_LifterSubsystem, .5))); 
-/* from stage */ m_driverController.leftBumper().onTrue(Commands.runOnce(() -> m_LifterSubsystem.setAngle(40))
-  .andThen(new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, m_LifterSubsystem, .5)));
+    /* from stage */ m_driverController.leftBumper().onTrue(Commands.runOnce(() -> m_LifterSubsystem.setAngle(40))
+    .andThen(new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, m_LifterSubsystem, .5)));
+
     m_driverController.povUp().onTrue(new IntakeNoteCommand(m_AmpSubsystem, m_IntakeSubsystem));
     m_driverController.povRight().onTrue(new AmpUpCommand(m_IntakeSubsystem, m_MoveAmpSubsystem));
     m_driverController.povDown().onTrue(new AmpShootCommand(m_AmpSubsystem, m_MoveAmpSubsystem));
+
+    m_driverController.y().whileTrue(new ClimbUpCommand(m_ClimbSubsystem, .6));
+    m_driverController.x().whileTrue(new ClimbDownCommand(m_ClimbSubsystem, .6));
   }
 
     
