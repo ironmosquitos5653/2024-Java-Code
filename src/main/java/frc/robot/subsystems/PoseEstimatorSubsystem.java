@@ -171,7 +171,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   public double voodooMath() {
     
-    double lowerBound = 42;
+    double lowerBound = 38;
     double upperBound = 53;
     double angleRange = upperBound - lowerBound;
 

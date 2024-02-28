@@ -16,22 +16,6 @@
     },
     {
       "anchor": {
-        "x": 2.0022079514869544,
-        "y": 4.78703102905098
-      },
-      "prevControl": {
-        "x": 1.8025053958392647,
-        "y": 4.928487005968093
-      },
-      "nextControl": {
-        "x": 2.226097853812213,
-        "y": 4.628442348237255
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
         "x": 2.8334887857023094,
         "y": 4.165959141418819
       },
@@ -44,25 +28,19 @@
       "linkedName": "BlueNoteOne"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1,
-      "rotationDegrees": -35.788973459183296,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.5,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
     "rotation": -32.12499844038754,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": "Blue Middle",

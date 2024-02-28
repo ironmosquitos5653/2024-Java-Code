@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.957703163228742,
-        "y": 3.2582386902641205
+        "x": 3.4545606733344716,
+        "y": 2.904705461919659
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.6146980225593173,
-        "y": 2.358311881490961
+        "x": 4.111555532665047,
+        "y": 2.0047786531464995
       },
       "isLocked": false,
       "linkedName": "BRShoot"
@@ -49,7 +49,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.5,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

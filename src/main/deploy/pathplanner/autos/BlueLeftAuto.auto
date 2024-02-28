@@ -42,7 +42,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BlueDriveOut"
+                  "pathName": "BLDriveOut"
                 }
               }
             ]
@@ -58,6 +58,43 @@
           "type": "path",
           "data": {
             "pathName": "BLDriveIn"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeOn"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "BLDriveOut2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Lift B"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BLDriveIn2"
           }
         },
         {

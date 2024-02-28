@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.8334887857023094,
-        "y": 4.165959141418819
+        "x": 3.7603191410918435,
+        "y": 5.809410905614693
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5015091736784776,
-        "y": 4.1573574728234775
+        "x": 5.250891671405438,
+        "y": 7.118439345696192
       },
       "isLocked": false,
-      "linkedName": "BlueNoteOne"
+      "linkedName": "BLShoot"
     },
     {
       "anchor": {
-        "x": 2.71,
-        "y": 5.520158783741731
+        "x": 8.279811492630499,
+        "y": 5.761636145027605
       },
       "prevControl": {
-        "x": 1.4480207286767173,
-        "y": 5.876295570436619
+        "x": 6.5216702125884005,
+        "y": 7.156621231135572
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BLNote2"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
-    "rotateFast": true
+    "rotation": -44.19307054466558,
+    "rotateFast": false
   },
   "reversed": false,
-  "folder": "Blue Middle",
+  "folder": "Blue Left",
   "previewStartingState": {
-    "rotation": -33.589886033080994,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

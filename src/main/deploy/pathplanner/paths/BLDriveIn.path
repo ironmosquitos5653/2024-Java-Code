@@ -20,12 +20,12 @@
         "y": 5.809410905614693
       },
       "prevControl": {
-        "x": 5.031127772708416,
-        "y": 6.019619852197887
+        "x": 5.031136757782471,
+        "y": 6.019565526129104
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BLShoot"
     }
   ],
   "rotationTargets": [
@@ -39,17 +39,17 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.5,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 15.461217740441926,
+    "rotation": 15.46,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Blue Left",
   "previewStartingState": {
     "rotation": 22.543061000057826,
     "velocity": 0
