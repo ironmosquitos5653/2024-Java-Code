@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.96,
-        "y": 3.26
+        "x": 2.957703163228742,
+        "y": 3.2582386902641205
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.616994859330575,
-        "y": 2.3600731912268404
+        "x": 3.6146980225593173,
+        "y": 2.358311881490961
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BRShoot"
     },
     {
       "anchor": {

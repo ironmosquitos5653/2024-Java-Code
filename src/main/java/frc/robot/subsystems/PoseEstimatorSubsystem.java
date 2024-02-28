@@ -17,6 +17,7 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -170,9 +171,9 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   public double voodooMath() {
     
-    double lowerBound = 36;
+    double lowerBound = 42;
     double upperBound = 53;
-    double angelRange = upperBound - lowerBound;
+    double angleRange = upperBound - lowerBound;
 
     double upperDistance = 1.368;
     double lowerDistance = 3.614;
@@ -183,7 +184,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     double distanceOffset = distance - lowerDistance;
     double distancePercent = distanceOffset/distanceRange;
 
-    double angle= distancePercent * angelRange + lowerBound;
+    double angle= distancePercent * angleRange + lowerBound;
     SmartDashboard.putNumber("The Angle", angle);
     return angle;
   }
@@ -196,6 +197,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
     double distance = Math.sqrt(ydiff*ydiff + xdiff*xdiff );
     SmartDashboard.putNumber("* distance", distance);
+    SmartDashboard.putNumber("photon distance", PhotonUtils.getDistanceToPose(pose, new Pose3d(target, new Rotation3d()).toPose2d()));
     return distance;
   }
 

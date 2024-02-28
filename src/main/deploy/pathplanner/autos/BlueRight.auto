@@ -5,7 +5,7 @@
       "x": 0.89,
       "y": 4.45
     },
-    "rotation": -58.46520809481176
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -88,7 +88,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Copy of DriveIn1"
+            "pathName": "DriveIn2"
           }
         },
         {

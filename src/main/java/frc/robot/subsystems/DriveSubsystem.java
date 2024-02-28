@@ -12,6 +12,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -335,10 +336,23 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void setAutoStart(Pose2d pose) {
+    if(poseEstimatorSubsystem.blueAlliance()) {
+      m_gyro.setYaw(pose.getRotation().getDegrees());
+    } else {
+      m_gyro.setYaw(pose.getRotation().getDegrees() + 180);
+    }
     poseEstimatorSubsystem.resetPosition(m_gyro.getRotation2d(), pose);
-    // angleOffset = pose.getRotation().getDegrees();
-    // if (poseEstimatorSubsystem.blueAlliance()) {
-    //    angleOffset = - angleOffset;
-    // }
+  }
+
+  PIDController pidController = new PIDController(1.2, 0.1, 0);
+  private boolean autoAim = false;
+
+  public void setAutoAim(boolean isOn) {
+    autoAim = isOn;
+  }
+
+  private double getAutoAimSpeed() {
+    pidController.setSetpoint(m_gyro.getAngle() + poseEstimatorSubsystem.getHorizontalShootAngle());
+    return pidController.calculate(m_gyro.getAngle());
   }
 }

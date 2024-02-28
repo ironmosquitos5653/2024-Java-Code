@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 2.96,
-        "y": 3.26
+        "x": 2.957703163228742,
+        "y": 3.2582386902641205
       },
       "prevControl": {
-        "x": 3.9131983749705297,
-        "y": 2.684941563219047
+        "x": 3.9109015381992718,
+        "y": 2.683180253483168
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BRShoot"
     }
   ],
   "rotationTargets": [],
