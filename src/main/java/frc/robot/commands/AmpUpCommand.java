@@ -38,7 +38,7 @@ public class AmpUpCommand extends Command {
   @Override
   public void execute() {
     m_IntakeSubsystem.intakeOn(.5);
-    m_MoveAmpSubsystem.setTargetPosition(.21);
+    m_MoveAmpSubsystem.setTargetPosition(.15);
 
   }
 

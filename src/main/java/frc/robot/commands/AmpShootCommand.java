@@ -32,8 +32,8 @@ public class AmpShootCommand extends Command {
   @Override
   public void execute() {
     m_AmpSubsystem.ampShoot(.6);
-    if (timer.hasElapsed(.25)) {
-      m_MoveAmpSubsystem.setTargetPosition(.35);
+    if (timer.hasElapsed(.1)) {
+      m_MoveAmpSubsystem.setTargetPosition(.2);
     }
   }
 
