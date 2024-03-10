@@ -28,6 +28,8 @@ import frc.robot.commands.IntakeNoteCommand;
 import frc.robot.commands.IntakeSpitCommand;
 import frc.robot.commands.ShootAutoCommand;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.autos.Test1Blue;
+import frc.robot.commands.autos.Test1Red;
 import frc.robot.subsystems.AmpSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -57,7 +59,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
  */
 public class RobotContainer {
   // The robot's subsystems
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  public final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final PoseEstimatorSubsystem m_PoseEstimatorSubsystem = new PoseEstimatorSubsystem(m_robotDrive);
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_ShooterSubsystem = new ShooterSubsystem();
@@ -66,6 +68,7 @@ public class RobotContainer {
   private final MoveAmpSubsystem m_MoveAmpSubsystem = new MoveAmpSubsystem();
   private final ClimbSubsystem m_ClimbSubsystem = new ClimbSubsystem();
   private final AutonomousManager m_AutonomousManager = new AutonomousManager(m_IntakeSubsystem, m_LifterSubsystem, m_ShooterSubsystem);
+  private final TrajectoryCommandFactory m_TrajectoryCommandFactory = new TrajectoryCommandFactory(m_robotDrive);
 
 
 
@@ -132,9 +135,12 @@ public class RobotContainer {
     m_driverController.povUp().onTrue(new IntakeNoteCommand(m_AmpSubsystem, m_IntakeSubsystem));
     m_driverController.povRight().onTrue(new AmpUpCommand(m_IntakeSubsystem, m_MoveAmpSubsystem));
     m_driverController.povDown().onTrue(new AmpShootCommand(m_AmpSubsystem, m_MoveAmpSubsystem));
+    m_driverController.povLeft().onTrue(Commands.runOnce(() -> m_robotDrive.zeroHeading()));
 
     m_driverController.y().whileTrue(new ClimbUpCommand(m_ClimbSubsystem, .6));
     m_driverController.x().whileTrue(new ClimbDownCommand(m_ClimbSubsystem, .6));
+
+    SmartDashboard.putData("xxx", Commands.runOnce(() -> m_robotDrive.setAutoAim(true), m_robotDrive));
   }
 
     
@@ -186,23 +192,35 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
+    if (sendableChooser.getSelected() == "Test1 Blue") {
+      m_robotDrive.setAutoStart(Test1Blue.StartPose);
+      return     Test1Blue.buildAuto(m_robotDrive, m_TrajectoryCommandFactory);
+    } else if (sendableChooser.getSelected() == "Test1 Red") {
+      m_robotDrive.setAutoStart(Test1Red.StartPose);
+      return Test1Red.buildAuto(m_robotDrive, m_TrajectoryCommandFactory);
+    }
     return autoCommands.get(sendableChooser.getSelected());
   }
 
   public void buildAutos() {
     sendableChooser = new SendableChooser<String>();
+     m_robotDrive.setAutoStart(Test1Blue.StartPose);
 
-    addAuto("DriveBack", AutoBuilder.buildAuto("DriveBack"));
-    addAuto("BankAndForth", AutoBuilder.buildAuto("Back and forth"));
-    addAuto("test", AutoBuilder.buildAuto("test"));
-    addAuto("TwoNote2", AutoBuilder.buildAuto("TwoNote2"));
-    addAuto("TwoNote3", AutoBuilder.buildAuto("TwoNote3"));
-    addAuto("BlueRight", AutoBuilder.buildAuto("BlueRight"));
-    addAuto("ThreeNote2", AutoBuilder.buildAuto("ThreeNote2"));
-    addAuto("BlueLeftAuto", AutoBuilder.buildAuto("BlueLeftAuto"));
-    addAuto("RedLeftAuto", AutoBuilder.buildAuto("RedLeftAuto"));
-    addAuto("BlueMiddle", AutoBuilder.buildAuto("BlueMiddle"));
+    // addAuto("DriveBack", AutoBuilder.buildAuto("DriveBack"));
+    // addAuto("BankAndForth", AutoBuilder.buildAuto("Back and forth"));
+    // addAuto("test", AutoBuilder.buildAuto("test"));
+    // addAuto("TwoNote2", AutoBuilder.buildAuto("TwoNote2"));
+    // addAuto("TwoNote3", AutoBuilder.buildAuto("TwoNote3"));
+    // addAuto("BlueRight", AutoBuilder.buildAuto("BlueRight"));
+    // addAuto("ThreeNote2", AutoBuilder.buildAuto("ThreeNote2"));
+    // addAuto("BlueLeftAuto", AutoBuilder.buildAuto("BlueLeftAuto"));
+    // addAuto("RedLeftAuto", AutoBuilder.buildAuto("RedLeftAuto"));
+    // addAuto("BlueMiddle", AutoBuilder.buildAuto("BlueMiddle"));
+    // addAuto("DriveBackNegative", AutoBuilder.buildAuto("DriveBackNegative"));
 
+     sendableChooser.addOption("Test1 Blue", "Test1 Blue");
+     
+     sendableChooser.addOption("Test1 Red", "Test1 Red");
     SmartDashboard.putData("Autonomous Chooser", sendableChooser);
   }
 

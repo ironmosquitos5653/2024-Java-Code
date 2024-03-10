@@ -157,6 +157,9 @@ public class DriveSubsystem extends SubsystemBase {
    * @param rateLimit     Whether to enable rate limiting for smoother control.
    */
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit) {
+
+    SmartDashboard.putNumber("passed in rot", rot);
+    rot = getAutoAimSpeed(rot);
     
     double xSpeedCommanded;
     double ySpeedCommanded;
@@ -335,24 +338,45 @@ public class DriveSubsystem extends SubsystemBase {
     return states;
   }
 
+  public double gyroUpdate;
+
   public void setAutoStart(Pose2d pose) {
     if(poseEstimatorSubsystem.blueAlliance()) {
-      m_gyro.setYaw(pose.getRotation().getDegrees());
+      gyroUpdate = pose.getRotation().getDegrees();
+     // m_gyro.setYaw(pose.getRotation().getDegrees());
     } else {
-      m_gyro.setYaw(pose.getRotation().getDegrees() + 180);
+      gyroUpdate = pose.getRotation().getDegrees() + 180;
+     // m_gyro.setYaw(pose.getRotation().getDegrees() + 180);
     }
     poseEstimatorSubsystem.resetPosition(m_gyro.getRotation2d(), pose);
   }
 
-  PIDController pidController = new PIDController(1.2, 0.1, 0);
+  public void resetGyro() {
+    m_gyro.setYaw(m_gyro.getYaw().getValueAsDouble() + gyroUpdate);
+  }
+
+  PIDController pidController = new PIDController(.02, 0.0005, 0.00);
   private boolean autoAim = false;
 
   public void setAutoAim(boolean isOn) {
     autoAim = isOn;
   }
 
-  private double getAutoAimSpeed() {
-    pidController.setSetpoint(m_gyro.getAngle() + poseEstimatorSubsystem.getHorizontalShootAngle());
-    return pidController.calculate(m_gyro.getAngle());
+  private double getAutoAimSpeed(double speed) {
+      pidController.setSetpoint(poseEstimatorSubsystem.getHorizontalShootAngle());
+      double sp = pidController.calculate(getPose().getRotation().getDegrees());
+      if (sp > .2) {
+        sp = .2;
+      } else if (sp < -.2) {
+        sp = -.2;
+      }
+      
+      SmartDashboard.putString("Rot speed", sp + " - " + getPose().getRotation().getDegrees() + " - " + poseEstimatorSubsystem.getHorizontalShootAngle());
+
+    if (autoAim) {
+
+       return sp;
+    }
+    return speed;
   }
 }

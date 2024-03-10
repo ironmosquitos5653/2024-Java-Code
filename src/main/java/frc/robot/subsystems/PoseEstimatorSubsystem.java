@@ -75,7 +75,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
         DriveConstants.kDriveKinematics,
         driveSubsystem.getGyroscopeRotation(),
         driveSubsystem.getModulePositions(),
-        new Pose2d(new Translation2d(0, 2), new Rotation2d(180)),
+        new Pose2d(new Translation2d(0, 0), new Rotation2d(0)),
         stateStdDevs,
         visionMeasurementStdDevs);
     
@@ -110,7 +110,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
           SmartDashboard.putNumber(">> Z", target.getBestCameraToTarget().getZ());
           SmartDashboard.putNumber(">> Yaw", target.getYaw());
           SmartDashboard.putNumber(">> Pitch", target.getPitch());
-          poseEstimator.addVisionMeasurement(p, estimatedPose.get().timestampSeconds);
+         // poseEstimator.addVisionMeasurement(p, estimatedPose.get().timestampSeconds);
       }
       // poseEstimator.addVisionMeasurement(estimatedPose.get().estimatedPose.toPose2d(), estimatedPose.get().timestampSeconds);
     }
@@ -207,13 +207,13 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     double xdiff = Math.abs(pose.getX() - target.getX());
     double ydiff = Math.abs(pose.getY() - target.getY());
 
-    double angle = Math.atan( ydiff / xdiff );
+    double angle = Units.radiansToDegrees(Math.atan( ydiff / xdiff ));
     SmartDashboard.putNumber("*horizontal angle", angle);
     if (blueAlliance()) {
       if (pose.getY() > target.getY()) {
-        return 270 - angle;
+        return angle;
       } else {
-        return 90 + angle;
+        return - angle;
       }
     }
     // Red alliance

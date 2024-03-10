@@ -3,9 +3,9 @@
   "startingPose": {
     "position": {
       "x": 1.0,
-      "y": 6.793570973708735
+      "y": 4.328393327414923
     },
-    "rotation": 60.0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "1Meter"
+            "pathName": "1MeterNegative"
           }
         }
       ]

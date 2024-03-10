@@ -7,12 +7,14 @@ package frc.robot;
 import com.fasterxml.jackson.core.sym.Name;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LiftCommand;
 import frc.robot.commands.ShootAutoCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.ShooterToggleCommand;
+import frc.robot.commands.autos.CommandRegistry;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LifterSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -31,15 +33,20 @@ public class AutonomousManager {
   } 
 
 public void initialize() {
-    NamedCommands.registerCommand("IntakeOn", new IntakeCommand(m_IntakeSubsystem));
-    NamedCommands.registerCommand("Shoot", new ShootAutoCommand(m_ShooterSubsystem, m_IntakeSubsystem, .5));
+    register("IntakeOn", new IntakeCommand(m_IntakeSubsystem));
+    register("Shoot", new ShootAutoCommand(m_ShooterSubsystem, m_IntakeSubsystem, .5));
     // NamedCommands.registerCommand("Lift 30", new RunCommand(() -> m_LifterSubsystem.setAngle(30), m_LifterSubsystem));
-    NamedCommands.registerCommand("ShooterOn", new ShooterToggleCommand(m_ShooterSubsystem, .5));
-    NamedCommands.registerCommand("ShooterOff", new ShooterToggleCommand(m_ShooterSubsystem, 0));
-    NamedCommands.registerCommand("Lift 40", new LiftCommand(m_LifterSubsystem, 40));
-    NamedCommands.registerCommand("Lift 35", new LiftCommand(m_LifterSubsystem, 36));
-    NamedCommands.registerCommand("Lift 53", new LiftCommand(m_LifterSubsystem, 53));
-    NamedCommands.registerCommand("Lift B", new LiftCommand(m_LifterSubsystem, 36));
-    NamedCommands.registerCommand("Lift Stage Side", new LiftCommand(m_LifterSubsystem, 32));
+    register("ShooterOn", new ShooterToggleCommand(m_ShooterSubsystem, .5));
+    register("ShooterOff", new ShooterToggleCommand(m_ShooterSubsystem, 0));
+    register("Lift 40", new LiftCommand(m_LifterSubsystem, 40));
+    register("Lift 35", new LiftCommand(m_LifterSubsystem, 36));
+    register("Lift 53", new LiftCommand(m_LifterSubsystem, 53));
+    register("Lift B", new LiftCommand(m_LifterSubsystem, 36));
+    register("Lift Stage Side", new LiftCommand(m_LifterSubsystem, 32));
+  }
+
+  private void register(String name, Command command) {
+        NamedCommands.registerCommand(name, command);
+        CommandRegistry.register(name, command);
   }
 }

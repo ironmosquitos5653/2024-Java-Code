@@ -24,7 +24,7 @@ public class Camera {
     /*
     public final static Camera DRIVE_CAMERA =  new Camera("limelight-drive",
             new Transform2d(new Translation2d(0.2286, .2032),
-                    new Rotation2d(0)));
+                    new Rotation2d(0))); 
     */
 
     public final static Camera SHOOT_CAMERA =  new Camera("shootcamera",
@@ -80,6 +80,7 @@ public class Camera {
             DriverStation.reportError("Failed to load AprilTagFieldLayout", e.getStackTrace());
             layout = null;
         }
+        
         return layout;
     }
 
