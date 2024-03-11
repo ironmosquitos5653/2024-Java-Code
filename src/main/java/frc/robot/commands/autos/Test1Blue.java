@@ -26,22 +26,21 @@ public class Test1Blue {
       .andThen(CommandRegistry.getCommand("ShooterOn"))
       .andThen(CommandRegistry.getCommand("Shoot"))
       .andThen(buildPathOut(driveSubsystem, trajectoryCommandFactory))
-      .andThen(CommandRegistry.getCommand("ShooterOff"));
+      .andThen(CommandRegistry.getCommand("ShooterOff"))
+      .andThen(
+        CommandRegistry.getCommand("IntakeOn")
+        .alongWith(buildPathOut(driveSubsystem, trajectoryCommandFactory))
+      );
 
   }
 
   public static Command buildPathOut(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
-            Trajectory driveIn3Ball = trajectoryCommandFactory.createTrajectory(
-            new Pose2d(.95, 6.72,  new Rotation2d(Units.degreesToRadians(60))),
-            new ArrayList<Translation2d>(),
-            new Pose2d(1.6868945316121644, 7.462417621927986, new Rotation2d(Units.degreesToRadians(0)))
-        );
-        //             Trajectory driveIn3Ball = trajectoryCommandFactory.createTrajectory(
-        //     new Pose2d(0, 0, new Rotation2d(Units.degreesToRadians(60))),
-        //     new ArrayList<Translation2d>(),
-        //     new Pose2d(1, 0, new Rotation2d(Units.degreesToRadians(60)))
-        // );
-        return trajectoryCommandFactory.createTrajectoryCommand(driveIn3Ball);
+    Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
+        new Pose2d(.95, 6.72,  new Rotation2d(Units.degreesToRadians(60))),
+        new ArrayList<Translation2d>(),
+        new Pose2d(1.6868945316121644, 7.462417621927986, new Rotation2d(Units.degreesToRadians(0)))
+    );
+    return trajectoryCommandFactory.createTrajectoryCommand(trajectory);
   }
 
 }

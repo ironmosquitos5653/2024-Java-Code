@@ -1,12 +1,7 @@
 package frc.robot.subsystems;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NavigableMap;
 import java.util.Optional;
-import java.util.TreeMap;
-
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonTrackedTarget;
@@ -18,7 +13,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.numbers.N3;
@@ -100,7 +94,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     Optional<EstimatedRobotPose> estimatedPose = Camera.SHOOT_CAMERA.getEstimatedGlobalPose();
     if(estimatedPose.isPresent()) {
       PhotonTrackedTarget target = Camera.SHOOT_CAMERA.getPhotonCamera().getLatestResult().getBestTarget();
-      Transform3d x = Camera.SHOOT_CAMERA.getPhotonCamera().getLatestResult().getBestTarget().getBestCameraToTarget();
       Optional<Pose3d> tagPose = Camera.getFieldLayout().getTagPose(target.getFiducialId());
       if (tagPose.isPresent()) {
           Pose2d p = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(), tagPose.get(), Camera.SHOOT_CAMERA.getRobotToCamera().inverse()).toPose2d();

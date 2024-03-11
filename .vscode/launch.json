@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "AutoGenerator",
+      "request": "launch",
+      "mainClass": "frc.generator.AutoGenerator",
+      "projectName": "2024-Java-Code"
+    },
+    {
+      "type": "java",
       "name": "Main",
       "request": "launch",
       "mainClass": "frc.robot.Main",

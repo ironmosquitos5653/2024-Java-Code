@@ -21,9 +21,6 @@ public class ShooterSubsystem extends SubsystemBase {
   private static final int deviceIDshoot2 = 15;
   private CANSparkFlex shoot2;
 
-  private static final int deviceIDshootAngle = 16;
-  private CANSparkMax shootAngle;
-
   public ShooterSubsystem() {
     shootAdvance = new CANSparkMax(deviceIDshootAdv, MotorType.kBrushless);
     shootAdvance.restoreFactoryDefaults();

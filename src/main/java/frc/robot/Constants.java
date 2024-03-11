@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import com.revrobotics.AlternateEncoderType;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.geometry.Rotation3d;

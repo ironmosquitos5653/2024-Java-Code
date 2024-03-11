@@ -1,7 +1,6 @@
 package frc.robot.subsystems.vision;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Optional;
 
 import org.photonvision.EstimatedRobotPose;
@@ -31,7 +30,6 @@ public class Camera {
         new Transform3d(new Translation3d(-0.23495, -0.3175, 0),
         new Rotation3d(0, Units.degreesToRadians(-12.8), Units.degreesToRadians(180))));
 
-    private final String name;
     private final Transform3d robotToCam;
 
     private Pose2d previousPose = new Pose2d();
@@ -40,8 +38,6 @@ public class Camera {
     private PhotonCamera camera;
 
     public Camera(String name, Transform3d robotToCam) {
-        // PhotonCamera.setVersionCheckEnabled(false);
-        this.name = name;
         this.robotToCam = robotToCam;
         camera = new PhotonCamera(name);
 

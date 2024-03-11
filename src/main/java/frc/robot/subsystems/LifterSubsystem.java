@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.AbsoluteEncoder;
@@ -21,14 +20,12 @@ public class LifterSubsystem extends SubsystemBase {
   private CANSparkMax lifter; 
 
   private PIDController pidController;
-  private PoseEstimatorSubsystem m_PoseEstimatorSubsystem;
 
   private AbsoluteEncoder encoder = null;
   private double targetAngle = 0;
 
   /** Creates a new LifterSubsystem. */
   public LifterSubsystem(PoseEstimatorSubsystem poseEstimatorSubsystem) {
-    m_PoseEstimatorSubsystem = poseEstimatorSubsystem;
     lifter = new CANSparkMax(deviceIDlifter, MotorType.kBrushless);
     lifter.restoreFactoryDefaults();
     encoder = lifter.getAbsoluteEncoder(Type.kDutyCycle);

@@ -4,15 +4,12 @@
 
 package frc.robot;
 
-import com.fasterxml.jackson.core.sym.Name;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LiftCommand;
 import frc.robot.commands.ShootAutoCommand;
-import frc.robot.commands.ShootCommand;
 import frc.robot.commands.ShooterToggleCommand;
 import frc.robot.commands.autos.CommandRegistry;
 import frc.robot.subsystems.IntakeSubsystem;
