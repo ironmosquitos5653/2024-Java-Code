@@ -16,21 +16,8 @@ import frc.generator.data.Waypoint;
 
 public class PathParser {
 
-  private double previousAngle;
     
-  public PathParser(double startAngle) {
-    previousAngle = startAngle;
-  }
-
-  public double getPreviousAngle() {
-    return previousAngle;
-  }
-  
-  public void setPreviousAngle(double angle) {
-    previousAngle = angle;
-  }
-
-  public AutoPath parsePath(String name) throws Exception {
+  public static AutoPath parsePath(String name) throws Exception {
       File pathFile = new File(AutoGenerator.PATHPLANNER_PATH + "/paths/" + name + ".path");
       JSONParser parser = new JSONParser();
       JSONObject json = (JSONObject) parser.parse(new FileReader(pathFile));
@@ -45,7 +32,7 @@ public class PathParser {
       return new AutoPath(name, version, reversed, folder, waypoints, globalConstraints, endState);
   } 
 
-  private Waypoint[] parseWaypoints(JSONObject json) {
+  private static Waypoint[] parseWaypoints(JSONObject json) {
     JSONArray jsonWaypoints = (JSONArray) json.get("waypoints");
 
     ArrayList<Waypoint> waypoints = new ArrayList<Waypoint>();
@@ -55,7 +42,7 @@ public class PathParser {
     }
     return waypoints.toArray(new Waypoint[waypoints.size()]);
     }
-    private Waypoint parseWaypoint(JSONObject json) {
+    private static Waypoint parseWaypoint(JSONObject json) {
         Point anchor = parsePoint((JSONObject) json.get("anchor"));
         Point prevControl = parsePoint((JSONObject) json.get("anchor"));
         Point nextControl = parsePoint((JSONObject) json.get("anchor"));
@@ -64,11 +51,11 @@ public class PathParser {
         return new Waypoint(anchor, prevControl, nextControl, isLocked, linkedName);
     }
 
-  private Point parsePoint(JSONObject json) {
+  private static Point parsePoint(JSONObject json) {
     return new Point((double) json.get("x"), (double) json.get("y"));
   }
 
-  private GlobalConstraints parseGlobalConstraints(JSONObject json) {
+  private static GlobalConstraints parseGlobalConstraints(JSONObject json) {
     return new GlobalConstraints(
             AutoParser.getDouble(json.get("maxVelocity")),
             AutoParser.getDouble(json.get("maxAcceleration")),
@@ -76,7 +63,7 @@ public class PathParser {
             AutoParser.getDouble(json.get("maxAngularAcceleration")));
   }
 
-  private EndState parseEndState(JSONObject json) {
+  private static EndState parseEndState(JSONObject json) {
     return new EndState(AutoParser.getDouble(json.get("velocity")), AutoParser.getDouble(json.get("rotation")), (boolean)json.get("rotateFast"));
   }
 }

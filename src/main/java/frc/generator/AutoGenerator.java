@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import javax.swing.RepaintManager;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import frc.generator.data.Auto;
 import frc.generator.data.AutoCommand;
@@ -19,8 +21,8 @@ public class AutoGenerator {
 
     public static String PATHPLANNER_PATH = "src/main/deploy/pathplanner";
     public static String AUTO_GEN_PATH = "src/main/java/frc/robot/commands/autos";
-
-    private PathParser pathParser;
+    
+    private static AprilTagFieldLayout layout;
 
     public AutoGenerator() {
 
@@ -67,6 +69,11 @@ public class $AUTO_NAME {
         io.close();
     }
 
+    public void generateRedAuto(Auto auto) throws Exception {
+        auto.flipToRed();
+        generateAuto(auto);
+    }
+
     public String generatePaths(Auto auto) throws Exception {
         StringBuilder sb = new StringBuilder();
         generatePaths(auto.getAutoCommand(), sb);
@@ -102,13 +109,13 @@ public class $AUTO_NAME {
             """;
 
     private void generatePath(PathAutoCommand command, StringBuilder sb) throws Exception {
-        AutoPath path = pathParser.parsePath(command.getPathName());
+        AutoPath path = command.getAutoPath();
         Waypoint start = path.getStartPoint();
         Waypoint[] interior = path.getInteriorWaypoints();
         Waypoint end = path.getEndPoint();
         String sx = "" + start.getAnchor().getX();
         String sy = "" + start.getAnchor().getY();
-        String sd = "" + pathParser.getPreviousAngle();
+        String sd = "" + path.getStartAngle();
         String ex = "" + end.getAnchor().getX();
         String ey = "" + end.getAnchor().getY();
         String ed = "" + path.getEndState().getRotation();
@@ -128,7 +135,7 @@ public class $AUTO_NAME {
 
         sb.append(function);
 
-        pathParser.setPreviousAngle(path.getEndState().getRotation());
+        
     }
 
     private String generateInteriorWaypoints(Waypoint[] waypoints) {
@@ -167,6 +174,18 @@ public class $AUTO_NAME {
             sb.append(" ");
         }
     }
+     
+    public static AprilTagFieldLayout getAprilTagFieldLayout() {
+        if (layout == null) {
+            try {
+                layout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
+            } catch (Exception ex) {
+                System.err.println(ex.getMessage());
+                System.err.println(ex.getStackTrace());
+            }
+        }
+        return layout;
+    }
 
     public static void main(String[] args) throws Exception {
         ArrayList<Auto> autos = new ArrayList<Auto>();
@@ -177,8 +196,10 @@ public class $AUTO_NAME {
         }
 
         for(Auto a : autos) {
-            ag.pathParser = new PathParser(a.getStartingPose().getRotation().getDegrees());
             ag.generateAuto(a);
+            if (a.getName().contains("Blue")) {
+                ag.generateRedAuto(a);
+            }
         }
     }
 }

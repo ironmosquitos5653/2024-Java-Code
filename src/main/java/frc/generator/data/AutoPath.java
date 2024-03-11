@@ -10,6 +10,7 @@ public class AutoPath {
     private EndState endState;
     private boolean reversed;
     private String folder;
+    private double startAngle;
 
     public AutoPath(String name, double version, boolean reversed, String folder, Waypoint[] waypoints, GlobalConstraints globalConstraints, EndState endState) {
         this.name = name;
@@ -19,6 +20,7 @@ public class AutoPath {
         this.endState = endState;
         this.reversed = reversed;
         this.folder = folder;
+    
     }
 
     public String getName() {
@@ -56,6 +58,14 @@ public class AutoPath {
     public Waypoint getEndPoint() {
         return waypoints[waypoints.length - 1];
     }
+    
+    public double getStartAngle() {
+        return startAngle;
+    }
+
+    public void setStartAngle(double startAngle) {
+        this.startAngle = startAngle;
+    }
 
     public Waypoint[] getInteriorWaypoints() {
         ArrayList<Waypoint> interior = new ArrayList<Waypoint>();
@@ -65,5 +75,15 @@ public class AutoPath {
         return interior.toArray(new Waypoint[interior.size()]);
     
     }
+
+    public void flipToRed() {
+        endState.setRotation(Waypoint.flipAngle(endState.getRotation()));
+        startAngle = Waypoint.flipAngle(startAngle);
+
+        for (Waypoint waypoint : waypoints) {
+            waypoint.flipToRed();
+        }
+    }
+
 
 }

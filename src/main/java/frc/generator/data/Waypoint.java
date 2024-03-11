@@ -34,4 +34,26 @@ public class Waypoint {
     public String getLinkedName() {
         return linkedName;
     }
+
+    public void flipToRed() {
+        anchor.flipToRed();
+        prevControl.flipToRed();
+        nextControl.flipToRed();
+    }
+
+    public static double flipAngle(double angle) {
+
+        // top blue left 135
+        // top red right = 45
+        // 180 - blue = red
+
+        // bottom blue left = -135
+        // bottom right right -45
+        // -180 - blue = red
+
+        if (angle < 0) {
+            return -180 - angle;
+        }
+        return 180 - angle;
+    }
 }

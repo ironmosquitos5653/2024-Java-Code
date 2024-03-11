@@ -19,6 +19,10 @@ public class EndState {
         return rotation;
     }
 
+    public void setRotation(double rotation) {
+        this.rotation = rotation;
+    }
+
     public boolean getRotateFast() {
         return rotateFast;
     }

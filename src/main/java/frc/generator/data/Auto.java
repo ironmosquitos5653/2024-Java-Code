@@ -14,10 +14,35 @@ public class Auto {
         this.version = version;
         this.startingPose = startingPose;
         this.autoCommand = autoCommand;
+        updateAngles();
     }
         
     public String getName() {
         return name;
+    }
+
+    public void flipToRed() {
+        name = name.replace("Blue", "Red");
+        if (name.contains("Left")) {
+            name = name.replace("Left", "Right");
+        } else if (name.contains("Right")) {
+            name = name.replace("Right", "Left");
+        }
+        flipToRed(autoCommand);
+    }
+    
+    public void flipToRed(AutoCommand command) {
+        if (command instanceof PathAutoCommand) {
+            ((PathAutoCommand)command).flipToRed();
+        } else if (command instanceof SequentialAutoCommand) {
+            for (AutoCommand c : ((SequentialAutoCommand)command).getCommands()) {
+                flipToRed(c);
+            }
+        } else if (command instanceof ParallelAutoCommand) {
+            for (AutoCommand c : ((ParallelAutoCommand)command).getCommands()) {
+                flipToRed(c);
+            }
+        }
     }
 
     public String getClassName() {
@@ -36,5 +61,27 @@ public class Auto {
         return autoCommand;
     }
 
-    
+    // Start angles are not configured in pathplanner markup.  copying end to the start of the next one.
+    private void updateAngles() {
+        updateAngles(getAutoCommand(), startingPose.getRotation().getDegrees() );
+    }
+
+    private double updateAngles(AutoCommand command, double previousAngle)
+    {
+        if (command instanceof PathAutoCommand) {
+            PathAutoCommand p = (PathAutoCommand) command;
+            p.getAutoPath().setStartAngle(previousAngle);
+            previousAngle = p.getAutoPath().getEndState().getRotation();
+            
+        } else if (command instanceof SequentialAutoCommand) {
+            for (AutoCommand c : ((SequentialAutoCommand)command).getCommands()) {
+                previousAngle = updateAngles(c, previousAngle);
+            }
+        } else if (command instanceof ParallelAutoCommand) {
+            for (AutoCommand c : ((ParallelAutoCommand)command).getCommands()) {
+                previousAngle = updateAngles(c, previousAngle);
+            }
+        }
+        return previousAngle;
+    }
 }
