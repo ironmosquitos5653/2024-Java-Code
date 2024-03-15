@@ -46,6 +46,8 @@ import java.util.List;
 public class $AUTO_NAME {
   public static Pose2d StartPose = $START_POSE;
 
+  public static String NAME = "$NAME";
+
   public static Command buildAuto(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
     return $COMMAND_LIST;
   } 
@@ -55,7 +57,9 @@ public class $AUTO_NAME {
 """;
 
     public void generateAuto(Auto auto) throws Exception {
+        String name = auto.getName();
         String classText = ClassTemplate.replace("$AUTO_NAME", auto.getClassName())
+            .replace("$NAME", name)
             .replace("$START_POSE", buildStartPose(auto.getStartingPose()))
             .replace("$COMMAND_LIST", buildCommandList(auto))
             .replace("$PATH_FUNCTIONS", generatePaths(auto));
@@ -158,6 +162,68 @@ public class $AUTO_NAME {
         return sb.toString();
     }
 
+    private String AUTO_UTIL_TEMPLATE = """
+        package frc.robot.commands.autos;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.TrajectoryCommandFactory;
+import frc.robot.subsystems.DriveSubsystem;
+
+public class AutoUtil {
+    
+    public static void addAutos(SendableChooser<String> chooser) {
+$GENERATED_AUTOS_CHOOSER
+
+        // PathPlanner autos
+        chooser.addOption("PP Blue Left", "PP Blue Left");
+        chooser.addOption("PP Blue Middle", "PP Blue Middle");
+        chooser.addOption("PP Blue Right", "PP Blue Right");
+        chooser.addOption("PP Red Left", "PP Blue Right");
+        chooser.addOption("PP Red Middle", "PP Blue Middle");
+        chooser.addOption("PP Red Right", "PP Blue Left");
+    }
+
+    public static Command getAuto(String name, DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
+        switch(name) {
+$GENERATED_AUTOS_CASES
+            case "PP Blue Right": return AutoBuilder.buildAuto("BlueRight");
+            case "PP Blue Middle": return AutoBuilder.buildAuto("BlueMiddle");
+            case "PP Blue Left": return AutoBuilder.buildAuto("BlueLeftAuto");
+        }
+        return null;
+    }
+}
+            """;
+
+    public void generateAutoUtil(ArrayList<Auto> autos) throws Exception {
+        StringBuilder chooserValues = new StringBuilder();
+        StringBuilder caseValues = new StringBuilder();
+
+        for (Auto a : autos) {
+            String value = String.format("        chooser.addOption(\"%s\", \"%s\");", a.getName(), a.getName());
+            chooserValues.append(value + System.lineSeparator());
+
+            value = String.format("            case \"%s\": return Test1Blue.buildAuto(driveSubsystem, trajectoryCommandFactory);", a.getName());
+            caseValues.append(value + System.lineSeparator());
+        }
+
+        String classText = AUTO_UTIL_TEMPLATE
+                .replace("$GENERATED_AUTOS_CHOOSER", chooserValues)
+                .replace("$GENERATED_AUTOS_CASES", caseValues);
+
+        File output = new File(AUTO_GEN_PATH + "/AutoUtil.java");
+        if (output.exists()) {
+            output.delete();
+        }
+        FileWriter io = new FileWriter(output);
+        io.write(classText);
+        io.close();
+
+    }
+
     public String buildStartPose(Pose2d pose) {
         return String.format("new Pose2d(%f, %f, new Rotation2d(Units.degreesToRadians(%f)))", pose.getX(), pose.getY(), pose.getRotation().getDegrees());
     }
@@ -201,5 +267,6 @@ public class $AUTO_NAME {
                 ag.generateRedAuto(a);
             }
         }
+        ag.generateAutoUtil(autos);
     }
 }
