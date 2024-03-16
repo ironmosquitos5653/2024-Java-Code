@@ -31,7 +31,8 @@ public class CommandRegistry {
     if (name == "ShooterOn") return new ShooterToggleCommand(m_ShooterSubsystem, .5);
     if (name == "ShooterOff") return new ShooterToggleCommand(m_ShooterSubsystem, 0);
     if (name == "Lift 40") return new LiftCommand(m_LifterSubsystem, 40);
-    if (name == "Lift 35") return new LiftCommand(m_LifterSubsystem, 36);
+    if (name == "Lift GA") return new LiftCommand(m_LifterSubsystem, 34);
+    if (name == "Lift PP") return new LiftCommand(m_LifterSubsystem, 30);
     if (name == "Lift 53") return new LiftCommand(m_LifterSubsystem, 54);
     if (name == "Lift B") return new LiftCommand(m_LifterSubsystem, 36);
     if (name == "Lift Stage Side") return new LiftCommand(m_LifterSubsystem, 32);
