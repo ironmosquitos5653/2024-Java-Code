@@ -13,7 +13,9 @@ import frc.robot.subsystems.DriveSubsystem;
 import java.util.List;
 
 public class RedRightAuto {
-  public static Pose2d StartPose = new Pose2d(0.950000, 6.720000, new Rotation2d(Units.degreesToRadians(60.000000)));
+  public static Pose2d StartPose = new Pose2d(15.591000, 6.720000, new Rotation2d(Units.degreesToRadians(120.000000)));
+
+  public static String NAME = "RedRightAuto";
 
   public static Command buildAuto(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
     return CommandRegistry.getCommand("Lift 53")
@@ -37,7 +39,7 @@ public class RedRightAuto {
   
 public static Command buildBLDriveOut(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(8.165638986195322, 7.471972574045404,  new Rotation2d(Units.degreesToRadians(120.0))),
+      new Pose2d(15.589836781429012, 6.717131356769391,  new Rotation2d(Units.degreesToRadians(120.0))),
       List.of(
         new Translation2d(14.443242527338867, 7.577077047337),
         new Translation2d(11.19455880741679, 7.577077047337)
@@ -49,7 +51,7 @@ public static Command buildBLDriveOut(DriveSubsystem driveSubsystem, TrajectoryC
 
 public static Command buildBLDriveIn(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(12.780680858908157, 5.809410905614693,  new Rotation2d(Units.degreesToRadians(179.4031905487708))),
+      new Pose2d(8.213413746782413, 7.4815275261628225,  new Rotation2d(Units.degreesToRadians(179.4031905487708))),
       new ArrayList<Translation2d>(),
       new Pose2d(12.780680858908157, 5.809410905614693, new Rotation2d(Units.degreesToRadians(164.54)))
   );
@@ -58,7 +60,7 @@ public static Command buildBLDriveIn(DriveSubsystem driveSubsystem, TrajectoryCo
 
 public static Command buildBLDriveOut2(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(8.261188507369502, 5.761636145027605,  new Rotation2d(Units.degreesToRadians(164.54))),
+      new Pose2d(12.780680858908157, 5.809410905614693,  new Rotation2d(Units.degreesToRadians(164.54))),
       new ArrayList<Translation2d>(),
       new Pose2d(8.261188507369502, 5.761636145027605, new Rotation2d(Units.degreesToRadians(-135.80692945533443)))
   );
@@ -67,7 +69,7 @@ public static Command buildBLDriveOut2(DriveSubsystem driveSubsystem, Trajectory
 
 public static Command buildBLDriveIn2(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(12.780680858908157, 5.809410905614693,  new Rotation2d(Units.degreesToRadians(-135.80692945533443))),
+      new Pose2d(8.261188507369502, 5.761636145027605,  new Rotation2d(Units.degreesToRadians(-135.80692945533443))),
       new ArrayList<Translation2d>(),
       new Pose2d(12.780680858908157, 5.809410905614693, new Rotation2d(Units.degreesToRadians(164.54)))
   );

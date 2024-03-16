@@ -27,6 +27,10 @@ public class AutonomousManager {
         m_IntakeSubsystem = intakeSubsystem;
         m_LifterSubsystem = lifterSubsystem;
         m_ShooterSubsystem = shooterSubsystem;
+
+        CommandRegistry.m_IntakeSubsystem = intakeSubsystem;
+        CommandRegistry.m_LifterSubsystem = lifterSubsystem;
+        CommandRegistry.m_ShooterSubsystem = shooterSubsystem;
   } 
 
 public void initialize() {

@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 import java.util.Optional;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonUtils;
+import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.math.VecBuilder;
@@ -75,6 +76,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     
     tab.addString("Pose", this::getFomattedPose).withPosition(0, 0).withSize(2, 0);
     tab.add("Field", field2d).withPosition(2, 0).withSize(6, 4);
+
   }
 
   void resetPosition(Rotation2d rotation, Pose2d pose ) {
@@ -93,17 +95,14 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
     Optional<EstimatedRobotPose> estimatedPose = Camera.SHOOT_CAMERA.getEstimatedGlobalPose();
     if(estimatedPose.isPresent()) {
-      PhotonTrackedTarget target = Camera.SHOOT_CAMERA.getPhotonCamera().getLatestResult().getBestTarget();
-      Optional<Pose3d> tagPose = Camera.getFieldLayout().getTagPose(target.getFiducialId());
-      if (tagPose.isPresent()) {
-          Pose2d p = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(), tagPose.get(), Camera.SHOOT_CAMERA.getRobotToCamera().inverse()).toPose2d();
-          SmartDashboard.putString("estimated pose", getFomattedPose(p));
-          SmartDashboard.putNumber(">> X", target.getBestCameraToTarget().getX());
-          SmartDashboard.putNumber(">> Y", target.getBestCameraToTarget().getY());
-          SmartDashboard.putNumber(">> Z", target.getBestCameraToTarget().getZ());
-          SmartDashboard.putNumber(">> Yaw", target.getYaw());
-          SmartDashboard.putNumber(">> Pitch", target.getPitch());
-         // poseEstimator.addVisionMeasurement(p, estimatedPose.get().timestampSeconds);
+      PhotonPipelineResult result = Camera.SHOOT_CAMERA.getPhotonCamera().getLatestResult();
+      if (result.hasTargets()) {
+       PhotonTrackedTarget target = result.getBestTarget();
+       Optional<Pose3d> tagPose = Camera.getFieldLayout().getTagPose(target.getFiducialId());
+        if (tagPose.isPresent()) {
+            Pose2d p = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(), tagPose.get(), Camera.SHOOT_CAMERA.getRobotToCamera().inverse()).toPose2d();
+           //poseEstimator.addVisionMeasurement(p, estimatedPose.get().timestampSeconds);
+        }
       }
       // poseEstimator.addVisionMeasurement(estimatedPose.get().estimatedPose.toPose2d(), estimatedPose.get().timestampSeconds);
     }
@@ -178,7 +177,6 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     double distancePercent = distanceOffset/distanceRange;
 
     double angle= distancePercent * angleRange + lowerBound;
-    SmartDashboard.putNumber("The Angle", angle);
     return angle;
   }
 
@@ -199,8 +197,10 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     Translation3d target = getShootTarget();
     double xdiff = Math.abs(pose.getX() - target.getX());
     double ydiff = Math.abs(pose.getY() - target.getY());
+    
 
     double angle = Units.radiansToDegrees(Math.atan( ydiff / xdiff ));
+    SmartDashboard.putString("Shoot Target", target.getX() + " - " + target.getY());
     SmartDashboard.putNumber("*horizontal angle", angle);
     if (blueAlliance()) {
       if (pose.getY() > target.getY()) {
@@ -221,6 +221,10 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       return Constants.VisionConstants.BLUE_SPEAKER_TARGET;
     }
     return Constants.VisionConstants.RED_SPEAKER_TARGET;
+  }
+
+  private String getShootTargetPose() {
+    return getShootTarget().getX() + " - " + getShootTarget().getY();
   }
 
   public boolean blueAlliance() {

@@ -44,6 +44,12 @@ public class IntakeSubsystem extends SubsystemBase {
     decider.set(speed);
   }
 
+    public void ampUp(double speed) {
+    intake.set(-speed);
+    intakeAdvance.set(speed);
+    decider.set(-speed);
+  }
+
  public void advanceOn(double speed) {
     intakeAdvance.set(speed);
     decider.set(speed);

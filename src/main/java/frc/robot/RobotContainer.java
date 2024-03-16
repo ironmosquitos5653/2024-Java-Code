@@ -28,6 +28,14 @@ import frc.robot.commands.IntakeNoteCommand;
 import frc.robot.commands.IntakeSpitCommand;
 import frc.robot.commands.ShootAutoCommand;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.autos.AutoUtil;
+import frc.robot.commands.autos.BlueLeftAuto;
+import frc.robot.commands.autos.BlueRight;
+import frc.robot.commands.autos.DriveBackBlueLeft;
+import frc.robot.commands.autos.DriveBackRedRight;
+import frc.robot.commands.autos.RedLeft;
+import frc.robot.commands.autos.RedMiddle;
+import frc.robot.commands.autos.RedRightAuto;
 import frc.robot.commands.autos.Test1Blue;
 import frc.robot.commands.autos.Test1Red;
 import frc.robot.subsystems.AmpSubsystem;
@@ -48,6 +56,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.pathplanner.lib.auto.AutoBuilder;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -124,11 +134,11 @@ public class RobotContainer {
 
     /* from speaker */
     m_driverController.rightBumper().onTrue(Commands.runOnce(() -> m_LifterSubsystem.setAngle(m_PoseEstimatorSubsystem.getVerticalShootAngle())) //53
-      .andThen(new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, m_LifterSubsystem, .5)));
+      .andThen(new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, m_LifterSubsystem, m_robotDrive, .5)));
 
     /* from stage */
     m_driverController.leftBumper().onTrue(Commands.runOnce(() -> m_LifterSubsystem.setAngle(40))
-    .andThen(new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, m_LifterSubsystem, .5)));
+    .andThen(new ShootCommand(m_ShooterSubsystem, m_IntakeSubsystem, m_LifterSubsystem, m_robotDrive,.5)));
 
     m_driverController.povUp().onTrue(new IntakeNoteCommand(m_AmpSubsystem, m_IntakeSubsystem));
     m_driverController.povRight().onTrue(new AmpUpCommand(m_IntakeSubsystem, m_MoveAmpSubsystem));
@@ -190,35 +200,36 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    if (sendableChooser.getSelected() == "Test1 Blue") {
-      m_robotDrive.setAutoStart(Test1Blue.StartPose);
-      return     Test1Blue.buildAuto(m_robotDrive, m_TrajectoryCommandFactory);
-    } else if (sendableChooser.getSelected() == "Test1 Red") {
-      m_robotDrive.setAutoStart(Test1Red.StartPose);
-      return Test1Red.buildAuto(m_robotDrive, m_TrajectoryCommandFactory);
+    Command auto = AutoUtil.getAuto(sendableChooser.getSelected(), m_robotDrive, m_TrajectoryCommandFactory);
+    if (!auto.getName().startsWith("PP")) {
+
     }
-    return autoCommands.get(sendableChooser.getSelected());
+    if (sendableChooser.getSelected() == "BlueRightAuto") {
+      m_robotDrive.setAutoStart(BlueRight.StartPose);
+      
+    }
+    return auto;
   }
 
   public void buildAutos() {
     sendableChooser = new SendableChooser<String>();
-     m_robotDrive.setAutoStart(Test1Blue.StartPose);
+    AutoUtil.addAutos(sendableChooser);
 
     // addAuto("DriveBack", AutoBuilder.buildAuto("DriveBack"));
     // addAuto("BankAndForth", AutoBuilder.buildAuto("Back and forth"));
     // addAuto("test", AutoBuilder.buildAuto("test"));
     // addAuto("TwoNote2", AutoBuilder.buildAuto("TwoNote2"));
     // addAuto("TwoNote3", AutoBuilder.buildAuto("TwoNote3"));
-    // addAuto("BlueRight", AutoBuilder.buildAuto("BlueRight"));
+     //addAuto("BlueRight", AutoBuilder.buildAuto("BlueRight"));
     // addAuto("ThreeNote2", AutoBuilder.buildAuto("ThreeNote2"));
     // addAuto("BlueLeftAuto", AutoBuilder.buildAuto("BlueLeftAuto"));
     // addAuto("RedLeftAuto", AutoBuilder.buildAuto("RedLeftAuto"));
     // addAuto("BlueMiddle", AutoBuilder.buildAuto("BlueMiddle"));
     // addAuto("DriveBackNegative", AutoBuilder.buildAuto("DriveBackNegative"));
 
-     sendableChooser.addOption("Test1 Blue", "Test1 Blue");
-     
-     sendableChooser.addOption("Test1 Red", "Test1 Red");
+    //  sendableChooser.addOption("RedMiddle", "RedMiddle");
+    //  sendableChooser.addOption("RedLeft", "RedLeft");
+
     SmartDashboard.putData("Autonomous Chooser", sendableChooser);
   }
 

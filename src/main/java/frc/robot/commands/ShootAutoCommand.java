@@ -35,13 +35,13 @@ public class ShootAutoCommand extends Command {
   @Override
   public void execute() {
       m_ShooterSubsystem.shootAdvance(1);
-      m_IntakeSubsystem.advanceOn(.7);
+      m_IntakeSubsystem.advanceOn(1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_ShooterSubsystem.shootAdvance(0);
+    m_ShooterSubsystem.shootAdvance(.5);
     m_IntakeSubsystem.intakeOff(); 
   }
 
