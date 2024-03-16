@@ -206,8 +206,22 @@ $GENERATED_AUTOS_CASES
             String value = String.format("        chooser.addOption(\"%s\", \"%s\");", a.getName(), a.getName());
             chooserValues.append(value + System.lineSeparator());
 
-            value = String.format("            case \"%s\": return Test1Blue.buildAuto(driveSubsystem, trajectoryCommandFactory);", a.getName());
+            value = String.format("            case \"%s\": return %s.buildAuto(driveSubsystem, trajectoryCommandFactory);", a.getName(), a.getName());
             caseValues.append(value + System.lineSeparator());
+
+            if (a.getName().contains("Blue")) {
+                String name = a.getName().replace("Blue", "Red").replace(" ", "");
+                if (name.contains("Left")) {
+                    name = name.replace("Left", "Right");
+                } else if (name.contains("Right")) {
+                    name = name.replace("Right", "Left");
+                }
+                value = String.format("        chooser.addOption(\"%s\", \"%s\");", name, name);
+                chooserValues.append(value + System.lineSeparator());
+
+                value = String.format("            case \"%s\": return %s.buildAuto(driveSubsystem, trajectoryCommandFactory);", name, name);
+                caseValues.append(value + System.lineSeparator());
+            }
         }
 
         String classText = AUTO_UTIL_TEMPLATE
