@@ -15,6 +15,8 @@ import java.util.List;
 public class BlueMiddle {
   public static Pose2d StartPose = new Pose2d(1.495795, 5.551427, new Rotation2d(Units.degreesToRadians(0.000000)));
 
+  public static String NAME = "BlueMiddle";
+
   public static Command buildAuto(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
     return CommandRegistry.getCommand("Lift 53")
       .andThen(new WaitCommand(0.75))
@@ -40,7 +42,7 @@ public class BlueMiddle {
   
 public static Command buildBM1(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(2.8334887857023094, 4.165959141418819,  new Rotation2d(Units.degreesToRadians(0.0))),
+      new Pose2d(1.4957954892638068, 5.551427198444411,  new Rotation2d(Units.degreesToRadians(0.0))),
       new ArrayList<Translation2d>(),
       new Pose2d(2.8334887857023094, 4.165959141418819, new Rotation2d(Units.degreesToRadians(-32.12499844038754)))
   );
@@ -49,7 +51,7 @@ public static Command buildBM1(DriveSubsystem driveSubsystem, TrajectoryCommandF
 
 public static Command buildBM2(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(2.71, 5.520158783741731,  new Rotation2d(Units.degreesToRadians(-32.12499844038754))),
+      new Pose2d(2.8334887857023094, 4.165959141418819,  new Rotation2d(Units.degreesToRadians(-32.12499844038754))),
       new ArrayList<Translation2d>(),
       new Pose2d(2.71, 5.520158783741731, new Rotation2d(Units.degreesToRadians(0.0)))
   );
@@ -58,7 +60,7 @@ public static Command buildBM2(DriveSubsystem driveSubsystem, TrajectoryCommandF
 
 public static Command buildBM3(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(2.8812635462893987, 6.936895255470003,  new Rotation2d(Units.degreesToRadians(0.0))),
+      new Pose2d(2.71, 5.52,  new Rotation2d(Units.degreesToRadians(0.0))),
       new ArrayList<Translation2d>(),
       new Pose2d(2.8812635462893987, 6.936895255470003, new Rotation2d(Units.degreesToRadians(28.43476314954997)))
   );

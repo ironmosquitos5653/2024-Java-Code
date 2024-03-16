@@ -129,8 +129,8 @@ public class $AUTO_NAME {
         String function =
             BUILD_PATH_TEMPLATE
                 .replace("$FUNCTION_NAME", command.getFunctionName())
-                .replace("$START_X", ex)
-                .replace("$START_Y", ey)
+                .replace("$START_X", sx)
+                .replace("$START_Y", sy)
                 .replace("$START_DEGREES", sd)
                 .replace("$INTERIOR_WAYPOINTS", interiorWaypoints)
                 .replace("$END_X", ex)

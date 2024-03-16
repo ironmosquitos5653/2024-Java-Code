@@ -35,7 +35,7 @@ public class ShootAutoCommand extends Command {
   @Override
   public void execute() {
       m_ShooterSubsystem.shootAdvance(1);
-      m_IntakeSubsystem.advanceOn(.7);
+      m_IntakeSubsystem.advanceOn(1);
   }
 
   // Called once the command ends or is interrupted.

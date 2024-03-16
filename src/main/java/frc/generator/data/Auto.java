@@ -1,6 +1,10 @@
 package frc.generator.data;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
+import frc.generator.AutoGenerator;
 
 public class Auto {
 
@@ -22,6 +26,8 @@ public class Auto {
     }
 
     public void flipToRed() {
+        double x = AutoGenerator.getAprilTagFieldLayout().getFieldLength() - startingPose.getX();
+        startingPose = new Pose2d(new Translation2d(x, startingPose.getY()), new Rotation2d(Units.degreesToRadians(Waypoint.flipAngle(startingPose.getRotation().getDegrees()))));
         name = name.replace("Blue", "Red");
         if (name.contains("Left")) {
             name = name.replace("Left", "Right");

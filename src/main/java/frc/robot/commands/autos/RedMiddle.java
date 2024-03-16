@@ -13,7 +13,9 @@ import frc.robot.subsystems.DriveSubsystem;
 import java.util.List;
 
 public class RedMiddle {
-  public static Pose2d StartPose = new Pose2d(1.495795, 5.551427, new Rotation2d(Units.degreesToRadians(0.000000)));
+  public static Pose2d StartPose = new Pose2d(15.045205, 5.551427, new Rotation2d(Units.degreesToRadians(180.000000)));
+
+  public static String NAME = "RedMiddle";
 
   public static Command buildAuto(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
     return CommandRegistry.getCommand("Lift 53")
@@ -40,7 +42,7 @@ public class RedMiddle {
   
 public static Command buildBM1(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(13.707511214297691, 4.165959141418819,  new Rotation2d(Units.degreesToRadians(180.0))),
+      new Pose2d(15.045204510736193, 5.551427198444411,  new Rotation2d(Units.degreesToRadians(180.0))),
       new ArrayList<Translation2d>(),
       new Pose2d(13.707511214297691, 4.165959141418819, new Rotation2d(Units.degreesToRadians(-147.87500155961246)))
   );
@@ -49,7 +51,7 @@ public static Command buildBM1(DriveSubsystem driveSubsystem, TrajectoryCommandF
 
 public static Command buildBM2(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(13.831, 5.520158783741731,  new Rotation2d(Units.degreesToRadians(-147.87500155961246))),
+      new Pose2d(13.707511214297691, 4.165959141418819,  new Rotation2d(Units.degreesToRadians(-147.87500155961246))),
       new ArrayList<Translation2d>(),
       new Pose2d(13.831, 5.520158783741731, new Rotation2d(Units.degreesToRadians(180.0)))
   );
@@ -58,7 +60,7 @@ public static Command buildBM2(DriveSubsystem driveSubsystem, TrajectoryCommandF
 
 public static Command buildBM3(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(13.659736453710602, 6.936895255470003,  new Rotation2d(Units.degreesToRadians(180.0))),
+      new Pose2d(13.831, 5.52,  new Rotation2d(Units.degreesToRadians(180.0))),
       new ArrayList<Translation2d>(),
       new Pose2d(13.659736453710602, 6.936895255470003, new Rotation2d(Units.degreesToRadians(151.56523685045002)))
   );

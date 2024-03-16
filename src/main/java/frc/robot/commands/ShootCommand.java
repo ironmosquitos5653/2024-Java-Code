@@ -6,11 +6,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LifterSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShootCommand extends Command {
+  public DriveSubsystem m_DriveSubsystem;
   public ShooterSubsystem m_ShooterSubsystem;
   public IntakeSubsystem m_IntakeSubsystem;
   public LifterSubsystem m_LifterSubsystem;
@@ -18,8 +20,8 @@ public class ShootCommand extends Command {
   Timer timer = new Timer();
   
   /** Creates a new ShootCommand. */
-  public ShootCommand(ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem, LifterSubsystem lifterSubsystem, double speed) {
-
+  public ShootCommand(ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem, LifterSubsystem lifterSubsystem, DriveSubsystem driveSubsystem, double speed) {
+    m_DriveSubsystem = driveSubsystem;
     m_ShooterSubsystem = shooterSubsystem;
     m_IntakeSubsystem = intakeSubsystem;
     m_LifterSubsystem = lifterSubsystem;
@@ -30,6 +32,7 @@ public class ShootCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_DriveSubsystem.setAutoAim(true);
     timer.reset();
     timer.start();
   }
@@ -47,6 +50,7 @@ public class ShootCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_DriveSubsystem.setAutoAim(false);
     m_ShooterSubsystem.shootOff(0);
     m_IntakeSubsystem.intakeOff(); 
     m_LifterSubsystem.setAngle(0);

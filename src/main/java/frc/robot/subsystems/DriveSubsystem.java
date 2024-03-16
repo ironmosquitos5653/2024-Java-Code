@@ -353,16 +353,20 @@ public class DriveSubsystem extends SubsystemBase {
     m_gyro.setYaw(m_gyro.getYaw().getValueAsDouble() + gyroUpdate);
   }
 
-  PIDController pidController = new PIDController(.02, 0.0005, 0.00);
+  PIDController pidController = new PIDController(.04, 0.0005, 0.00);
   private boolean autoAim = false;
 
   public void setAutoAim(boolean isOn) {
+    pidController.reset();
     autoAim = isOn;
   }
 
   private double getAutoAimSpeed(double speed) {
-      pidController.setSetpoint(poseEstimatorSubsystem.getHorizontalShootAngle());
-      double sp = pidController.calculate(getPose().getRotation().getDegrees());
+      double angle = poseEstimatorSubsystem.getHorizontalShootAngle();
+      double poseAngle = getPose().getRotation().getDegrees();
+      SmartDashboard.putString("autoAim", angle + " - " + poseAngle);
+
+      double sp = pidController.calculate(poseAngle, angle);
       if (sp > .2) {
         sp = .2;
       } else if (sp < -.2) {

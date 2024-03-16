@@ -12,21 +12,21 @@ import frc.robot.TrajectoryCommandFactory;
 import frc.robot.subsystems.DriveSubsystem;
 import java.util.List;
 
-public class Test {
-  public static Pose2d StartPose = new Pose2d(1.763334, 6.392263, new Rotation2d(Units.degreesToRadians(-90.000000)));
+public class DriveBackRedRight {
+  public static Pose2d StartPose = new Pose2d(15.541000, 6.793571, new Rotation2d(Units.degreesToRadians(120.000000)));
 
-  public static String NAME = "Test";
+  public static String NAME = "DriveBackRedRight";
 
   public static Command buildAuto(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
-    return buildRedLeftTest(driveSubsystem, trajectoryCommandFactory);
+    return build1Meter(driveSubsystem, trajectoryCommandFactory);
   }
 
   
-public static Command buildRedLeftTest(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
+public static Command build1Meter(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(1.763334148551507, 6.392262984777185,  new Rotation2d(Units.degreesToRadians(-90.0))),
+      new Pose2d(15.541, 6.79,  new Rotation2d(Units.degreesToRadians(120.0))),
       new ArrayList<Translation2d>(),
-      new Pose2d(1.763334148551507, 5.990954995845633, new Rotation2d(Units.degreesToRadians(-90.49821161261363)))
+      new Pose2d(14.720336138743985, 7.338203244401553, new Rotation2d(Units.degreesToRadians(60.0)))
   );
   return trajectoryCommandFactory.createTrajectoryCommand(trajectory);
 }
