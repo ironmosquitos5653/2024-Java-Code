@@ -8,11 +8,27 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5015091736784776,
-        "y": 4.1573574728234775
+        "x": 2.393146604475027,
+        "y": 4.664372965109567
       },
       "isLocked": false,
       "linkedName": "BlueNoteOne"
+    },
+    {
+      "anchor": {
+        "x": 2.0386542591267003,
+        "y": 5.214768974992495
+      },
+      "prevControl": {
+        "x": 2.1126203261182495,
+        "y": 4.8555052210335425
+      },
+      "nextControl": {
+        "x": 1.9733530376151662,
+        "y": 5.531946336619946
+      },
+      "isLocked": false,
+      "linkedName": null
     },
     {
       "anchor": {
@@ -20,12 +36,12 @@
         "y": 5.520158783741731
       },
       "prevControl": {
-        "x": 1.4480207286767173,
-        "y": 5.876295570436619
+        "x": 2.1505992102893297,
+        "y": 5.4666451151084114
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BMNote2"
     }
   ],
   "rotationTargets": [],
