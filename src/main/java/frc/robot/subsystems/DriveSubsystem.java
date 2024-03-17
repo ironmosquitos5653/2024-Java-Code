@@ -353,7 +353,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_gyro.setYaw(m_gyro.getYaw().getValueAsDouble() + gyroUpdate);
   }
 
-  PIDController pidController = new PIDController(.04, 0.0005, 0.00);
+  PIDController pidController = new PIDController(.025, 0.0005, 0);
   private boolean autoAim = false;
 
   public void setAutoAim(boolean isOn) {
@@ -376,7 +376,6 @@ public class DriveSubsystem extends SubsystemBase {
       SmartDashboard.putString("Rot speed", sp + " - " + getPose().getRotation().getDegrees() + " - " + poseEstimatorSubsystem.getHorizontalShootAngle());
 
     if (autoAim) {
-
        return sp;
     }
     return speed;

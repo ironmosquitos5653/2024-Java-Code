@@ -101,10 +101,9 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
        Optional<Pose3d> tagPose = Camera.getFieldLayout().getTagPose(target.getFiducialId());
         if (tagPose.isPresent()) {
             Pose2d p = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(), tagPose.get(), Camera.SHOOT_CAMERA.getRobotToCamera().inverse()).toPose2d();
-           //poseEstimator.addVisionMeasurement(p, estimatedPose.get().timestampSeconds);
+          poseEstimator.addVisionMeasurement(p, estimatedPose.get().timestampSeconds);
         }
       }
-      // poseEstimator.addVisionMeasurement(estimatedPose.get().estimatedPose.toPose2d(), estimatedPose.get().timestampSeconds);
     }
 
     // Update pose estimator with driveSubsystem sensors
@@ -192,7 +191,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     return distance;
   }
 
-  public double getHorizontalShootAngle() {
+  public double   getHorizontalShootAngle() {
     Pose2d pose  = getCurrentPose();
     Translation3d target = getShootTarget();
     double xdiff = Math.abs(pose.getX() - target.getX());
@@ -209,11 +208,12 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
         return - angle;
       }
     }
-    // Red alliance
+
     if (pose.getY() > target.getY()) {
-      return 270 + angle;
-    }
-    return 90 - angle;
+        return 180 - angle;
+      } 
+
+    return angle - 180;
 }
 
   private Translation3d getShootTarget() {

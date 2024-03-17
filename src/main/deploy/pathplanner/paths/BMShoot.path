@@ -3,45 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.0,
-        "y": 2.904705461919659
+        "x": 2.82,
+        "y": 4.1
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.820918826125228,
-        "y": 2.102089484056557
-      },
-      "isLocked": false,
-      "linkedName": "BRShoot"
-    },
-    {
-      "anchor": {
-        "x": 6.263716595855327,
-        "y": 1.7676661599469314
-      },
-      "prevControl": {
-        "x": 5.213802182475811,
-        "y": 1.7239197260561177
-      },
-      "nextControl": {
-        "x": 7.221430886464265,
-        "y": 1.8075709220556377
+        "x": 2.7114996475887874,
+        "y": 4.069964572362057
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.3,
-        "y": 2.436512808166183
+        "x": 2.6232798391191166,
+        "y": 4.11
       },
       "prevControl": {
-        "x": 7.00052651203117,
-        "y": 1.9205453938256172
+        "x": 2.6901645039410416,
+        "y": 4.071780191530329
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BRNote2"
+      "linkedName": "BMShoot"
     }
   ],
   "rotationTargets": [],
@@ -55,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 23.025492008528147,
+    "rotation": -31.45887571748576,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "BlueRight",
+  "folder": "Blue Middle",
   "previewStartingState": {
-    "rotation": -39.83908119381189,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

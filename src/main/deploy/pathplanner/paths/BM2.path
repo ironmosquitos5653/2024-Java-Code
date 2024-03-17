@@ -3,41 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.8334887857023094,
-        "y": 4.165959141418819
+        "x": 2.6232798391191166,
+        "y": 4.11
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.393146604475027,
-        "y": 4.664372965109567
+        "x": 1.5340152977334782,
+        "y": 4.433497800706519
       },
       "isLocked": false,
-      "linkedName": "BlueNoteOne"
+      "linkedName": "BMShoot"
     },
     {
       "anchor": {
-        "x": 2.0386542591267003,
-        "y": 5.214768974992495
+        "x": 2.7857140251152197,
+        "y": 5.541872246326993
       },
       "prevControl": {
-        "x": 2.1126203261182495,
-        "y": 4.8555052210335425
-      },
-      "nextControl": {
-        "x": 1.9733530376151662,
-        "y": 5.531946336619946
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 2.71,
-        "y": 5.520158783741731
-      },
-      "prevControl": {
-        "x": 2.1505992102893297,
-        "y": 5.4666451151084114
+        "x": 1.4957954892638068,
+        "y": 5.188339017982531
       },
       "nextControl": null,
       "isLocked": false,
@@ -50,7 +34,7 @@
   "globalConstraints": {
     "maxVelocity": 4.5,
     "maxAcceleration": 4.0,
-    "maxAngularVelocity": 540.0,
+    "maxAngularVelocity": 400.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {

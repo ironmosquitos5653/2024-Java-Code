@@ -2,15 +2,21 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4957954892638068,
-      "y": 5.551427198444411
+      "x": 0.89,
+      "y": 4.45
     },
-    "rotation": 0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "ShooterOn"
+          }
+        },
         {
           "type": "named",
           "data": {
@@ -26,19 +32,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ShooterOn"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Lift 40"
           }
         },
         {
@@ -54,7 +48,44 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BM1"
+                  "pathName": "DriveOut1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Lift PP"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "DriveIn1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeOn"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "DriveOut2"
                 }
               }
             ]
@@ -63,75 +94,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BMShoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Lift BM2"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeOn"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "BM2"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Lift BM3"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeOn"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "BM3"
-                }
-              }
-            ]
+            "pathName": "DriveIn2"
           }
         },
         {

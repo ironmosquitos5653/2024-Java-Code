@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.327586253217587,
-        "y": 5.694751480205679
+        "x": 0.8938335058664806,
+        "y": 4.452607704941355
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.521700303025609,
-        "y": 7.041999728761599
+        "x": 1.3938335058664806,
+        "y": 3.5865823011569162
       },
       "isLocked": false,
-      "linkedName": "BLNote2"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.7603191410918435,
-        "y": 5.809410905614693
+        "x": 8.528240247683364,
+        "y": 0.7739511397354721
       },
       "prevControl": {
-        "x": 5.375106048935464,
-        "y": 6.5451422186558705
+        "x": 7.142772190657773,
+        "y": 0.5255223846826076
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BLShoot"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -34,18 +34,18 @@
   "globalConstraints": {
     "maxVelocity": 4.5,
     "maxAcceleration": 4.0,
-    "maxAngularVelocity": 400.0,
+    "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 15.46,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Blue Left",
+  "folder": "BlueRight",
   "previewStartingState": {
-    "rotation": -38.157226587369195,
+    "rotation": -59.98232044193536,
     "velocity": 0
   },
   "useDefaultConstraints": true

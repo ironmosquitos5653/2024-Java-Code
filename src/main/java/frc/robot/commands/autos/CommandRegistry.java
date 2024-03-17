@@ -34,7 +34,11 @@ public class CommandRegistry {
     if (name == "Lift GA") return new LiftCommand(m_LifterSubsystem, 34);
     if (name == "Lift PP") return new LiftCommand(m_LifterSubsystem, 30);
     if (name == "Lift 53") return new LiftCommand(m_LifterSubsystem, 54);
-    if (name == "Lift B") return new LiftCommand(m_LifterSubsystem, 36);
+    if (name == "Lift B") return new LiftCommand(m_LifterSubsystem, 37);
+    if (name == "Lift C") return new LiftCommand(m_LifterSubsystem, 35);
+    if (name == "Lift BM2") return new LiftCommand(m_LifterSubsystem, 50);
+    if (name == "Lift BM3") return new LiftCommand(m_LifterSubsystem, 39);
+    if (name == "Lift Shoot") return new LiftCommand(m_LifterSubsystem, 41);
     if (name == "Lift Stage Side") return new LiftCommand(m_LifterSubsystem, 32);
         return null;
     }

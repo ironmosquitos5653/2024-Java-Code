@@ -15,7 +15,7 @@ import java.util.List;
 public class Backandforth {
   public static Pose2d StartPose = new Pose2d(0.750509, 6.889120, new Rotation2d(Units.degreesToRadians(59.036243)));
 
-  public static String NAME = "Back and forth";
+  public static String NAME = "Backandforth";
 
   public static Command buildAuto(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
     return buildFromSpeaker(driveSubsystem, trajectoryCommandFactory)

@@ -206,11 +206,12 @@ $GENERATED_AUTOS_CASES
             String value = String.format("        chooser.addOption(\"%s\", \"%s\");", a.getName(), a.getName());
             chooserValues.append(value + System.lineSeparator());
 
-            value = String.format("            case \"%s\": return %s.buildAuto(driveSubsystem, trajectoryCommandFactory);", a.getName(), a.getName());
+            value = String.format("            case \"%s\": \r\n" + //
+                    "                driveSubsystem.setAutoStart(%s.StartPose); \r\n return %s.buildAuto(driveSubsystem, trajectoryCommandFactory);", a.getName(), a.getName(), a.getName());
             caseValues.append(value + System.lineSeparator());
 
-            if (a.getName().contains("Blue")) {
-                String name = a.getName().replace("Blue", "Red").replace(" ", "");
+            if (a.getName().contains("Red")) {
+                String name = a.getName().replace("Red", "Blue").replace(" ", "");
                 if (name.contains("Left")) {
                     name = name.replace("Left", "Right");
                 } else if (name.contains("Right")) {
@@ -219,7 +220,8 @@ $GENERATED_AUTOS_CASES
                 value = String.format("        chooser.addOption(\"%s\", \"%s\");", name, name);
                 chooserValues.append(value + System.lineSeparator());
 
-                value = String.format("            case \"%s\": return %s.buildAuto(driveSubsystem, trajectoryCommandFactory);", name, name);
+                value = String.format("            case \"%s\": \r\n" + //
+                        "                driveSubsystem.setAutoStart(%s.StartPose); \r\n            return %s.buildAuto(driveSubsystem, trajectoryCommandFactory);", name, name, name);
                 caseValues.append(value + System.lineSeparator());
             }
         }

@@ -30,6 +30,7 @@ import frc.robot.commands.ShootAutoCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.autos.AutoUtil;
 import frc.robot.commands.autos.BlueLeftAuto;
+import frc.robot.commands.autos.BlueMiddle;
 import frc.robot.commands.autos.BlueRight;
 import frc.robot.commands.autos.DriveBackBlueLeft;
 import frc.robot.commands.autos.DriveBackRedRight;
@@ -201,13 +202,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     Command auto = AutoUtil.getAuto(sendableChooser.getSelected(), m_robotDrive, m_TrajectoryCommandFactory);
-    if (!auto.getName().startsWith("PP")) {
 
-    }
-    if (sendableChooser.getSelected() == "BlueRightAuto") {
-      m_robotDrive.setAutoStart(BlueRight.StartPose);
-      
-    }
     return auto;
   }
 

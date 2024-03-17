@@ -25,7 +25,7 @@ public class RedLeft {
       .andThen(
         CommandRegistry.getCommand("IntakeOn")
         .alongWith(buildDriveOut1(driveSubsystem, trajectoryCommandFactory)))
-      .andThen(CommandRegistry.getCommand("Lift 35"))
+      .andThen(CommandRegistry.getCommand("Lift PP"))
       .andThen(buildDriveIn1(driveSubsystem, trajectoryCommandFactory))
       .andThen(CommandRegistry.getCommand("Shoot"))
       .andThen(
@@ -50,18 +50,18 @@ public static Command buildDriveIn1(DriveSubsystem driveSubsystem, TrajectoryCom
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
       new Pose2d(8.261000000000001, 0.79,  new Rotation2d(Units.degreesToRadians(180.0))),
       List.of(
-        new Translation2d(11.416568872389892, 1.4897778107624486)
+        new Translation2d(10.83147062695491, 1.5574572133637385)
       ),
-      new Pose2d(13.086439326665529, 2.904705461919659, new Rotation2d(Units.degreesToRadians(-132.6467031338917)))
+      new Pose2d(12.541, 2.904705461919659, new Rotation2d(Units.degreesToRadians(-147.0)))
   );
   return trajectoryCommandFactory.createTrajectoryCommand(trajectory);
 }
 
 public static Command buildDriveOut2(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(13.086439326665529, 2.904705461919659,  new Rotation2d(Units.degreesToRadians(-132.6467031338917))),
+      new Pose2d(12.541, 2.904705461919659,  new Rotation2d(Units.degreesToRadians(-147.0))),
       List.of(
-        new Translation2d(11.017521251302833, 1.3301587623276245)
+        new Translation2d(10.277283404144672, 1.7676661599469314)
       ),
       new Pose2d(8.241, 2.436512808166183, new Rotation2d(Units.degreesToRadians(156.97450799147185)))
   );
@@ -72,9 +72,9 @@ public static Command buildDriveIn2(DriveSubsystem driveSubsystem, TrajectoryCom
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
       new Pose2d(8.241, 2.436512808166183,  new Rotation2d(Units.degreesToRadians(156.97450799147185))),
       List.of(
-        new Translation2d(11.110632362889813, 1.5163809855015853)
+        new Translation2d(10.573486919784628, 1.729446351477261)
       ),
-      new Pose2d(13.086439326665529, 2.904705461919659, new Rotation2d(Units.degreesToRadians(-135.5075214686987)))
+      new Pose2d(12.541, 2.904705461919659, new Rotation2d(Units.degreesToRadians(-147.0)))
   );
   return trajectoryCommandFactory.createTrajectoryCommand(trajectory);
 }

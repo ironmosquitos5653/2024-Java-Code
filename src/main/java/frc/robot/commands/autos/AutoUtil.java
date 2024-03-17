@@ -10,16 +10,17 @@ import frc.robot.subsystems.DriveSubsystem;
 public class AutoUtil {
 
     public static void addAutos(SendableChooser<String> chooser) {
-        chooser.addOption("Back and forth", "Back and forth");
+        chooser.addOption("Backandforth", "Backandforth");
         chooser.addOption("RedRightAuto", "RedRightAuto");
+        chooser.addOption("BlueLeftAuto", "BlueLeftAuto");
         chooser.addOption("RedMiddle", "RedMiddle");
+        chooser.addOption("BlueMiddle", "BlueMiddle");
         chooser.addOption("RedLeft", "RedLeft");
+        chooser.addOption("BlueRight", "BlueRight");
         chooser.addOption("DriveBackRedRight", "DriveBackRedRight");
+        chooser.addOption("DriveBackBlueLeft", "DriveBackBlueLeft");
         chooser.addOption("DriveBackNegative", "DriveBackNegative");
         chooser.addOption("Test", "Test");
-        chooser.addOption("BlueRightAuto", "BlueRightAuto");
-        chooser.addOption("BlueMiddle", "BlueMiddle");
-        chooser.addOption("BlueLeft", "BlueLeft");
 
 
         // PathPlanner autos
@@ -33,16 +34,39 @@ public class AutoUtil {
 
     public static Command getAuto(String name, DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
         switch(name) {
-            case "Back and forth": return Test1Blue.buildAuto(driveSubsystem, trajectoryCommandFactory);
-            case "RedRightAuto": return RedRightAuto.buildAuto(driveSubsystem, trajectoryCommandFactory);
-            case "RedMiddle": return RedMiddle.buildAuto(driveSubsystem, trajectoryCommandFactory);
-            case "RedLeft": return RedLeft.buildAuto(driveSubsystem, trajectoryCommandFactory);
-            case "DriveBackRedRight": return Test1Blue.buildAuto(driveSubsystem, trajectoryCommandFactory);
-            case "DriveBackNegative": return Test1Blue.buildAuto(driveSubsystem, trajectoryCommandFactory);
-            case "Test": return Test1Blue.buildAuto(driveSubsystem, trajectoryCommandFactory);
-            case "BlueRightAuto": return BlueRight.buildAuto(driveSubsystem, trajectoryCommandFactory);
-            case "BlueMiddle": return BlueMiddle.buildAuto(driveSubsystem, trajectoryCommandFactory);
-            case "BlueLeft": return BlueLeftAuto.buildAuto(driveSubsystem, trajectoryCommandFactory);
+            case "Backandforth": 
+                driveSubsystem.setAutoStart(Backandforth.StartPose); 
+ return Backandforth.buildAuto(driveSubsystem, trajectoryCommandFactory);
+            case "RedRightAuto": 
+                driveSubsystem.setAutoStart(RedRightAuto.StartPose); 
+ return RedRightAuto.buildAuto(driveSubsystem, trajectoryCommandFactory);
+            case "BlueLeftAuto": 
+                driveSubsystem.setAutoStart(BlueLeftAuto.StartPose); 
+            return BlueLeftAuto.buildAuto(driveSubsystem, trajectoryCommandFactory);
+            case "RedMiddle": 
+                driveSubsystem.setAutoStart(RedMiddle.StartPose); 
+ return RedMiddle.buildAuto(driveSubsystem, trajectoryCommandFactory);
+            case "BlueMiddle": 
+                driveSubsystem.setAutoStart(BlueMiddle.StartPose); 
+            return BlueMiddle.buildAuto(driveSubsystem, trajectoryCommandFactory);
+            case "RedLeft": 
+                driveSubsystem.setAutoStart(RedLeft.StartPose); 
+ return RedLeft.buildAuto(driveSubsystem, trajectoryCommandFactory);
+            case "BlueRight": 
+                driveSubsystem.setAutoStart(BlueRight.StartPose); 
+            return BlueRight.buildAuto(driveSubsystem, trajectoryCommandFactory);
+            case "DriveBackRedRight": 
+                driveSubsystem.setAutoStart(DriveBackRedRight.StartPose); 
+ return DriveBackRedRight.buildAuto(driveSubsystem, trajectoryCommandFactory);
+            case "DriveBackBlueLeft": 
+                driveSubsystem.setAutoStart(DriveBackBlueLeft.StartPose); 
+            return DriveBackBlueLeft.buildAuto(driveSubsystem, trajectoryCommandFactory);
+            case "DriveBackNegative": 
+                driveSubsystem.setAutoStart(DriveBackNegative.StartPose); 
+ return DriveBackNegative.buildAuto(driveSubsystem, trajectoryCommandFactory);
+            case "Test": 
+                driveSubsystem.setAutoStart(Test.StartPose); 
+ return Test.buildAuto(driveSubsystem, trajectoryCommandFactory);
 
             case "PP Blue Right": return AutoBuilder.buildAuto("BlueRight");
             case "PP Blue Middle": return AutoBuilder.buildAuto("BlueMiddle");

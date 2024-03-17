@@ -3,32 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.71,
-        "y": 5.520158783741731
+        "x": 2.7857140251152197,
+        "y": 5.541872246326993
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.383817858544808,
-        "y": 5.774493730805644
+        "x": 1.7442242443166716,
+        "y": 6.134279277606901
       },
       "isLocked": false,
       "linkedName": "BMNote2"
-    },
-    {
-      "anchor": {
-        "x": 2.0852979887777954,
-        "y": 6.390190962200107
-      },
-      "prevControl": {
-        "x": 2.100370034605722,
-        "y": 6.133966183125346
-      },
-      "nextControl": {
-        "x": 2.0666404969173566,
-        "y": 6.707368323827558
-      },
-      "isLocked": false,
-      "linkedName": null
     },
     {
       "anchor": {
@@ -36,8 +20,8 @@
         "y": 6.968573209873693
       },
       "prevControl": {
-        "x": 2.6636802364513814,
-        "y": 6.847299512780844
+        "x": 1.7251143400818356,
+        "y": 6.287158511485587
       },
       "nextControl": null,
       "isLocked": false,
@@ -50,12 +34,12 @@
   "globalConstraints": {
     "maxVelocity": 4.5,
     "maxAcceleration": 4.0,
-    "maxAngularVelocity": 540.0,
+    "maxAngularVelocity": 400.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 28.43476314954997,
+    "rotation": 25.196706713554445,
     "rotateFast": true
   },
   "reversed": false,
