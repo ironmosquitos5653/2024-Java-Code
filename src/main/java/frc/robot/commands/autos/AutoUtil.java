@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.TrajectoryCommandFactory;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.PoseEstimatorSubsystem;
 
 public class AutoUtil {
 
@@ -33,6 +34,7 @@ public class AutoUtil {
     }
 
     public static Command getAuto(String name, DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
+        PoseEstimatorSubsystem.setVisionEnabled(false);
         switch(name) {
             case "Backandforth": 
                 driveSubsystem.setAutoStart(Backandforth.StartPose); 

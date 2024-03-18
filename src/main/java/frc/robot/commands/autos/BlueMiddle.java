@@ -43,40 +43,40 @@ public class BlueMiddle {
   
 public static Command buildBM1(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(1.4957954892638068, 5.551427198444411,  new Rotation2d(Units.degreesToRadians(0.0))),
-      new ArrayList<Translation2d>(),
-      new Pose2d(2.766604120880384, 4.108629428714312, new Rotation2d(Units.degreesToRadians(0.0)))
+      new Pose2d(1.5, 5.551427198444411,  new Rotation2d(Units.degreesToRadians(180.0))),
+      List.of(
+        new Translation2d(2, 4.508629428714312)
+      ),
+      new Pose2d(3, 4.18629428714312, new Rotation2d(Units.degreesToRadians(180.0)))
   );
   return trajectoryCommandFactory.createTrajectoryCommand(trajectory);
 }
 
 public static Command buildBMShoot(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(2.77, 4.11,  new Rotation2d(Units.degreesToRadians(0.0))),
+      new Pose2d(3, 4.11,  new Rotation2d(Units.degreesToRadians(180.0))),
       new ArrayList<Translation2d>(),
-      new Pose2d(2.6232798391191166, 4.11, new Rotation2d(Units.degreesToRadians(-28.80534954987098)))
+      new Pose2d(2, 5.51, new Rotation2d(Units.degreesToRadians(180.19465045012902)))
   );
   return trajectoryCommandFactory.createTrajectoryCommand(trajectory);
 }
 
 public static Command buildBM2(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(2.6232798391191166, 4.11,  new Rotation2d(Units.degreesToRadians(-28.80534954987098))),
-      List.of(
-        new Translation2d(2.0386542591267003, 5.214768974992495)
-      ),
-      new Pose2d(2.71, 5.520158783741731, new Rotation2d(Units.degreesToRadians(0.0)))
+      new Pose2d(2, 5.51,  new Rotation2d(Units.degreesToRadians(-150.19465045012902))),
+      new ArrayList<Translation2d>(),
+      new Pose2d(3.1, 5.820158783741731, new Rotation2d(Units.degreesToRadians(180.0)))
   );
   return trajectoryCommandFactory.createTrajectoryCommand(trajectory);
 }
 
 public static Command buildBM3(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(2.71, 5.520158783741731,  new Rotation2d(Units.degreesToRadians(0.0))),
+      new Pose2d(3.1, 5.820158783741731,  new Rotation2d(Units.degreesToRadians(180.0))),
       List.of(
-        new Translation2d(2.0852979887777954, 6.390190962200107)
+        new Translation2d(2, 6.390190962200107)
       ),
-      new Pose2d(2.887570138776641, 6.968573209873693, new Rotation2d(Units.degreesToRadians(33.0)))
+      new Pose2d(3, 6.968573209873693, new Rotation2d(Units.degreesToRadians(147.0)))
   );
   return trajectoryCommandFactory.createTrajectoryCommand(trajectory);
 }

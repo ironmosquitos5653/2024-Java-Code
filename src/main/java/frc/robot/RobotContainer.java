@@ -71,7 +71,7 @@ public class RobotContainer {
   public final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final PoseEstimatorSubsystem m_PoseEstimatorSubsystem = new PoseEstimatorSubsystem(m_robotDrive);
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
-  private final ShooterSubsystem m_ShooterSubsystem = new ShooterSubsystem();
+  public final ShooterSubsystem m_ShooterSubsystem = new ShooterSubsystem();
   private final LifterSubsystem m_LifterSubsystem = new LifterSubsystem(m_PoseEstimatorSubsystem);
   private final AmpSubsystem m_AmpSubsystem = new AmpSubsystem();
   private final MoveAmpSubsystem m_MoveAmpSubsystem = new MoveAmpSubsystem();
@@ -146,8 +146,8 @@ public class RobotContainer {
     m_driverController.povDown().onTrue(new AmpShootCommand(m_AmpSubsystem, m_MoveAmpSubsystem));
     m_driverController.povLeft().onTrue(Commands.runOnce(() -> m_robotDrive.zeroHeading()));
 
-    m_driverController.y().whileTrue(new ClimbUpCommand(m_ClimbSubsystem, .6));
-    m_driverController.x().whileTrue(new ClimbDownCommand(m_ClimbSubsystem, .6));
+    m_driverController.y().whileTrue(new ClimbUpCommand(m_ClimbSubsystem, 1));
+    m_driverController.x().whileTrue(new ClimbDownCommand(m_ClimbSubsystem, 1));
 
     SmartDashboard.putData("xxx", Commands.runOnce(() -> m_robotDrive.setAutoAim(true), m_robotDrive));
   }

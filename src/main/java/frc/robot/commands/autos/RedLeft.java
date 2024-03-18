@@ -39,42 +39,42 @@ public class RedLeft {
   
 public static Command buildDriveOut1(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(15.64716649413352, 4.452607704941355,  new Rotation2d(Units.degreesToRadians(-120.0))),
+      new Pose2d(15.6, 4.452607704941355,  new Rotation2d(Units.degreesToRadians(-59.99999999999999))),
       new ArrayList<Translation2d>(),
-      new Pose2d(8.012759752316637, 0.7739511397354721, new Rotation2d(Units.degreesToRadians(180.0)))
+      new Pose2d(8, 0.37, new Rotation2d(Units.degreesToRadians(0.0)))
   );
   return trajectoryCommandFactory.createTrajectoryCommand(trajectory);
 }
 
 public static Command buildDriveIn1(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(8.261000000000001, 0.79,  new Rotation2d(Units.degreesToRadians(180.0))),
+      new Pose2d(8, 0.79,  new Rotation2d(Units.degreesToRadians(0.0))),
       List.of(
-        new Translation2d(10.83147062695491, 1.5574572133637385)
+        new Translation2d(11.4, 1.3301587623276245)
       ),
-      new Pose2d(12.541, 2.904705461919659, new Rotation2d(Units.degreesToRadians(-147.0)))
+      new Pose2d(13.1, 2.904705461919659, new Rotation2d(Units.degreesToRadians(-47.3532968661083)))
   );
   return trajectoryCommandFactory.createTrajectoryCommand(trajectory);
 }
 
 public static Command buildDriveOut2(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(12.541, 2.904705461919659,  new Rotation2d(Units.degreesToRadians(-147.0))),
+      new Pose2d(13.1, 2.904705461919659,  new Rotation2d(Units.degreesToRadians(-47.3532968661083))),
       List.of(
-        new Translation2d(10.277283404144672, 1.7676661599469314)
+        new Translation2d(11.4, 1.3301587623276245)
       ),
-      new Pose2d(8.241, 2.436512808166183, new Rotation2d(Units.degreesToRadians(156.97450799147185)))
+      new Pose2d(8, 2.436512808166183, new Rotation2d(Units.degreesToRadians(23.025492008528147)))
   );
   return trajectoryCommandFactory.createTrajectoryCommand(trajectory);
 }
 
 public static Command buildDriveIn2(DriveSubsystem driveSubsystem, TrajectoryCommandFactory trajectoryCommandFactory) {
   Trajectory trajectory = trajectoryCommandFactory.createTrajectory(
-      new Pose2d(8.241, 2.436512808166183,  new Rotation2d(Units.degreesToRadians(156.97450799147185))),
+      new Pose2d(8, 2.436512808166183,  new Rotation2d(Units.degreesToRadians(23.025492008528147))),
       List.of(
-        new Translation2d(10.573486919784628, 1.729446351477261)
+        new Translation2d(11.4, 1.5163809855015853)
       ),
-      new Pose2d(12.541, 2.904705461919659, new Rotation2d(Units.degreesToRadians(-147.0)))
+      new Pose2d(13.1, 2.904705461919659, new Rotation2d(Units.degreesToRadians(-44.49247853130129)))
   );
   return trajectoryCommandFactory.createTrajectoryCommand(trajectory);
 }

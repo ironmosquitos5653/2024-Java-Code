@@ -55,6 +55,10 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   private final Field2d field2d = new Field2d();
 
+  private static boolean visionOn = false;
+
+
+
   public PoseEstimatorSubsystem(DriveSubsystem driveSubsystem) {
     this.driveSubsystem = driveSubsystem;
 
@@ -99,7 +103,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
       if (result.hasTargets()) {
        PhotonTrackedTarget target = result.getBestTarget();
        Optional<Pose3d> tagPose = Camera.getFieldLayout().getTagPose(target.getFiducialId());
-        if (tagPose.isPresent()) {
+        if (tagPose.isPresent() && visionOn) {
             Pose2d p = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(), tagPose.get(), Camera.SHOOT_CAMERA.getRobotToCamera().inverse()).toPose2d();
           poseEstimator.addVisionMeasurement(p, estimatedPose.get().timestampSeconds);
         }
@@ -114,6 +118,9 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
     field2d.setRobotPose(getCurrentPose());
   }
 
+  public static void setVisionEnabled(boolean enable){
+    visionOn = enable;
+  }
   private String getFomattedPose() {
     return getFomattedPose(getCurrentPose());
   }
@@ -162,6 +169,10 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   public double voodooMath() {
     
+
+    //  ***********************************************************
+    //  Increase lower bound to raise shot from far away
+     //  ***********************************************************
     double lowerBound = 38;
     double upperBound = 53;
     double angleRange = upperBound - lowerBound;
