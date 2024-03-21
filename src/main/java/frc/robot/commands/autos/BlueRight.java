@@ -29,7 +29,7 @@ public class BlueRight extends GenAutoCommand {
       .andThen(
         CommandRegistry.getCommand("IntakeOn")
         .alongWith(buildDriveOut1(driveSubsystem, trajectoryCommandFactory)))
-      .andThen(CommandRegistry.getCommand("Lift 35"))
+      .andThen(CommandRegistry.getCommand("Lift SR"))
       .andThen(buildDriveIn1(driveSubsystem, trajectoryCommandFactory))
       .andThen(CommandRegistry.getCommand("Shoot"))
       .andThen(

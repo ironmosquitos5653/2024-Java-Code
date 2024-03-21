@@ -55,7 +55,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   private final Field2d field2d = new Field2d();
 
-  private static boolean visionOn = false;
+  private static boolean visionOn = true;
 
 
 
@@ -89,9 +89,7 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    getVerticalShootAngle();
-    getSpeakerDistance();
-    getHorizontalShootAngle();
+    SmartDashboard.putBoolean("visionOn", visionOn);
 
     // for(frc.robot.subsystems.vision.Camera.PoseInstance p: Camera.DRIVE_CAMERA.getLatest()) {
     //     poseEstimator.addVisionMeasurement(p.getPose(), p.getTimestamp());
@@ -105,7 +103,8 @@ public class PoseEstimatorSubsystem extends SubsystemBase {
        Optional<Pose3d> tagPose = Camera.getFieldLayout().getTagPose(target.getFiducialId());
         if (tagPose.isPresent() && visionOn) {
             Pose2d p = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(), tagPose.get(), Camera.SHOOT_CAMERA.getRobotToCamera().inverse()).toPose2d();
-          poseEstimator.addVisionMeasurement(p, estimatedPose.get().timestampSeconds);
+            SmartDashboard.putString("vision pose blah blah blah", getFomattedPose(p));
+            poseEstimator.addVisionMeasurement(p, estimatedPose.get().timestampSeconds);
         }
       }
     }
